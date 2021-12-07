@@ -9,10 +9,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"time"
 	"math/rand"
-	"github.com/onosproject/onos-lib-go/pkg/logging"
 )
-
-var log = logging.GetLogger("collector")
 
 // RecordDeviceStatusMetrics records status of the device
 func RecordDeviceStatusMetrics(period time.Duration, site string, iccid string) {

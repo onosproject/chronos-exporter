@@ -12,7 +12,7 @@ export GO111MODULE=on
 
 KIND_CLUSTER_NAME           ?= kind
 DOCKER_REPOSITORY           ?= onosproject/
-ONOS_CHRONOS_EXPORTER_VERSION ?= v0.0.1
+ONOS_CHRONOS_EXPORTER_VERSION ?= latest
 LOCAL_CHRONOS_EXPORTER         ?=
 
 all: build images

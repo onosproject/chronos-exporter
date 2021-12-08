@@ -17,7 +17,7 @@ LOCAL_CHRONOS_EXPORTER         ?=
 
 all: build images
 
-build-tools:=$(shell if [ ! -d "./build/build-tools" ]; then mkdir -p build && cd build && git clone https://github.com/onosproject/build-tools.git; fi)
+build-tools:=$(shell if [ ! -d "./build/build-tools" ]; then cd build && git clone https://github.com/onosproject/build-tools.git; fi)
 include ./build/build-tools/make/onf-common.mk
 
 images: # @HELP build simulators image

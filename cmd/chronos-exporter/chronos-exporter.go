@@ -5,19 +5,31 @@
 package main
 
 import (
-	"github.com/onosproject/chronos-exporter/pkg/collector"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"log"
-	"net/http"
-	"time"
+	"flag"
+	"github.com/onosproject/chronos-exporter/pkg/manager"
+	"github.com/onosproject/onos-lib-go/pkg/logging"
+	"io/ioutil"
 )
 
-func main() {
-	collector.RecordDeviceStatusMetrics(2*time.Second, "starbucks-newyork-cameras", "8991101200003204514")
-	collector.RecordDeviceStatusMetrics(2*time.Second, "acme-chicago-robots", "8991101200003204515")
+var log = logging.GetLogger("main")
 
-	http.Handle("/metrics", promhttp.Handler())
-	if err := http.ListenAndServe(":2112", nil); err != nil {
-		log.Fatal(err)
+func main() {
+	configPath := flag.String("config", "", "path to configuration file")
+	ready := make(chan bool)
+	flag.Parse()
+
+	if configPath == nil || *configPath == "" {
+		log.Fatal("No config specified. Cannot start")
 	}
+
+	log.Infof("Starting chronos-exporter with config: %s", *configPath)
+	configJSON, err := ioutil.ReadFile(*configPath)
+	if err != nil {
+		log.Fatalf("Cannot start without a valid config %v", err)
+	}
+
+	mgr := manager.NewManager(configJSON)
+	mgr.Run()
+
+	<-ready
 }

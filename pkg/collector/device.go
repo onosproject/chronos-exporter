@@ -11,15 +11,24 @@ import (
 	"time"
 )
 
-// RecordDeviceStatusMetrics records status of the device
-func RecordDeviceStatusMetrics(period time.Duration, site string, iccid string) {
+type Device struct {
+	SerialNumber string `json:"serial-number"`
+	DisplayName  string `json:"display-name,omitempty"`
+	Location     string `json:"location,omitempty"`
+	Imei         string `json:"imei,omitempty"`
+	Type         string `json:"type,omitempty"`
+	Sim          string `json:"sim,omitempty"` // This is a cross reference to Sim
+}
+
+func (d *Device) collect(period time.Duration, site string) {
+	log.Infof("Starting collector for Device %s", d.SerialNumber)
 	go func() {
 		for {
 			count := float64(rand.Intn(10))
 			if count != 5 {
-				deviceConnectedStatus.WithLabelValues("Active", site, iccid).Set(1)
+				deviceConnectedStatus.WithLabelValues("Active", site, d.Sim).Set(1)
 			} else {
-				deviceConnectedStatus.WithLabelValues("Inactive", site, iccid).Set(0)
+				deviceConnectedStatus.WithLabelValues("Inactive", site, d.Sim).Set(0)
 			}
 			time.Sleep(period)
 		}

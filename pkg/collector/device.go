@@ -11,24 +11,17 @@ import (
 	"time"
 )
 
-type Device struct {
-	SerialNumber string `json:"serial-number"`
-	DisplayName  string `json:"display-name,omitempty"`
-	Location     string `json:"location,omitempty"`
-	Imei         string `json:"imei,omitempty"`
-	Type         string `json:"type,omitempty"`
-	Sim          string `json:"sim,omitempty"` // This is a cross reference to Sim
-}
-
 func (d *Device) collect(period time.Duration, site string) {
 	log.Infof("Starting collector for Device %s", d.SerialNumber)
 	go func() {
 		for {
 			count := float64(rand.Intn(10))
-			if count != 5 {
-				deviceConnectedStatus.WithLabelValues("Active", site, d.Sim).Set(1)
-			} else {
-				deviceConnectedStatus.WithLabelValues("Active", site, d.Sim).Set(0)
+			if d.Sim != nil {
+				if count != 5 {
+					deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim).Set(1)
+				} else {
+					deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim).Set(0)
+				}
 			}
 			time.Sleep(period * 3)
 		}
@@ -36,17 +29,23 @@ func (d *Device) collect(period time.Duration, site string) {
 
 	go func() {
 			time.Sleep(period*2)
-			deviceConnectionEventCore.WithLabelValues("some core event", "some colour", site, d.Sim).Set(1)
+			if d.Sim != nil {
+				deviceConnectionEventCore.WithLabelValues("some core event", "some colour", site, *d.Sim).Set(1)
+			}
 	}()
 
 	go func() {
 		time.Sleep(period*4)
-		deviceConnectionEventRan.WithLabelValues("some ran event", site, d.Sim).Set(1)
+		if d.Sim != nil {
+			deviceConnectionEventRan.WithLabelValues("some ran event", site, *d.Sim).Set(1)
+		}
 	}()
 
 	go func() {
 		time.Sleep(period*6)
-		deviceConnectionEventFabric.WithLabelValues("some fabric event", site, d.Sim).Set(1)
+		if d.Sim != nil {
+			deviceConnectionEventFabric.WithLabelValues("some fabric event", site, *d.Sim).Set(1)
+		}
 	}()
 }
 

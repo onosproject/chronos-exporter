@@ -11,12 +11,6 @@ import (
 	"time"
 )
 
-type Slice struct {
-	SliceID      string   `json:"slice-id"`
-	DisplayName  string   `json:"display-name,omitempty"`
-	DeviceGroups []string `json:"device-groups,omitempty"` // This is a cross reference to DeviceGroup
-}
-
 func (s *Slice) collect(period time.Duration, site string) {
 
 	// TODO: add in slice metrics generation
@@ -25,7 +19,7 @@ func (s *Slice) collect(period time.Duration, site string) {
 		maxThroughput := 1000000
 		for {
 			throughput := float64(rand.Intn(maxThroughput - minThroughput) + minThroughput)
-			sliceThroughputBytes.WithLabelValues(s.DisplayName, site).Set(throughput)
+			sliceThroughputBytes.WithLabelValues(s.SliceId, site).Set(throughput)
 			time.Sleep(period/10)
 		}
 	}()

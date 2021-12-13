@@ -1,0 +1,55 @@
+# SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+sites:
+  - site-id: site1
+    display-name: Site 1
+    image: https://opennetworking.org/wp-content/uploads/2020/02/aether-logo.png
+    small-cells:
+      - small-cell-id: sc1
+        display-name: SC 1
+      - small-cell-id: sc2
+        display-name: SC 2
+    slices:
+      - slice-id: slice1
+        display-name: Slice 1
+        device-groups:
+          - dg1
+        applications:
+          - app1
+          - app2
+      - slice-id: slice2
+        display-name: Slice 2
+    device-groups:
+      - device-group-id: dg1
+        display-name: DG 1
+        devices:
+          - 752365A
+          - 752908B
+      - device-group-id: dg2
+        display-name: DG 2
+    devices:
+      - serial-number: 752365A
+        imei: 123-456-7891
+        display-name: Phone 1
+        location: Somewhere
+        type: Pixel 5 Phone
+        sim: 123-456-789
+      - serial-number: 752908B
+        imei: 123-456-7892
+        display-name: Phone 2
+        location: Somewhere
+        type: iPhone 11
+        sim: 123-456-788
+    sims:
+      - iccid: 123-456-789
+        display-name: Sim 9
+      - iccid: 123-456-788
+        display-name: Sim 8
+      - iccid: 123-456-787
+        display-name: Sim 7
+applications:
+  - application-id: app-1
+    display-name: App 1
+  - application-id: app-2
+    display-name: App 2

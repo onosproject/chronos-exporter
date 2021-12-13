@@ -1,0 +1,215 @@
+# SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+components:
+  schemas:
+    Application:
+      type: object
+      properties:
+        application-id:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        display-name:
+          type: string
+          maxLength: 50
+      required:
+        - application-id
+        - display-name
+    Device:
+      type: object
+      properties:
+        serial-number:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        imei:
+          type: string
+          maxLength: 20
+        display-name:
+          type: string
+          maxLength: 50
+        location:
+          type: string
+          maxLength: 50
+        type:
+          type: string
+        sim:
+          type: string
+      required:
+        - serial-number
+        - imei
+        - display-name
+        - type
+    DeviceGroup:
+      type: object
+      properties:
+        device-group-id:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        display-name:
+          type: string
+          maxLength: 50
+        devices:
+          type: array
+          items:
+            type: string
+            uniqueItems: true
+      required:
+        - device-group-id
+        - display-name
+    Sim:
+      type: object
+      properties:
+        iccid:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        display-name:
+          type: string
+          maxLength: 50
+      required:
+        - iccid
+    Slice:
+      type: object
+      properties:
+        slice-id:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        display-name:
+          type: string
+          maxLength: 50
+        device-groups:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        applications:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      required:
+        - slice-id
+        - display-name
+    Site:
+      type: object
+      properties:
+        site-id:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        display-name:
+          type: string
+          maxLength: 50
+        image:
+          type: string
+        small-cells:
+          type: array
+          x-keys:
+            - small-cell-id
+          minItems: 1
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/SmallCell'
+        slices:
+          type: array
+          x-keys:
+            - slice-id
+          minItems: 1
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Slice'
+        device-groups:
+          type: array
+          uniqueItems: true
+          x-keys:
+            - device-group-id
+          items:
+            $ref: '#/components/schemas/DeviceGroup'
+        devices:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          x-keys:
+            - serial-number
+          items:
+            $ref: '#/components/schemas/Device'
+        sims:
+          type: array
+          x-keys:
+            - iccid
+          minItems: 1
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Sim'
+      required:
+        - site-id
+        - small-cells
+        - slices
+        - device-groups
+        - devices
+        - sims
+    SmallCell:
+      type: object
+      properties:
+        small-cell-id:
+          type: string
+          pattern: "^([a-zA-Z0-9\\-\\.-])*$"
+          minLength: 3
+        display-name:
+          type: string
+          maxLength: 50
+      required:
+        - small-cell-id
+        - display-name
+    AetherModel:
+      description: Top level configuration
+      properties:
+        sites:
+          description: a collection of sites
+          type: array
+          x-keys:
+            - site-id
+          minItems: 1
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Site'
+        applications:
+          type: array
+          x-keys:
+            - application-id
+          minItems: 1
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Application'
+      required:
+        - sites
+        - applications
+info:
+  contact:
+    email: info@opennetworking.org
+    name: Open Networking Foundation
+    url: https://opennetworking.org
+  description: Temporary coniguration for Aether Enterprise Portal
+  license:
+    name: LicenseRef-ONF-Member-Only-1.0
+    url: https://opennetworking.org/wp-content/uploads/2020/06/ONF-Member-Only-Software-License-v1.0.pdf
+  termsOfService: https://opennetworking.org/wp-content/uploads/2019/02/ONF-Licensing-and-IPR-FAQ-2020-06.pdf
+  title: Aether Enterprise Portal
+  version: 0.0.1
+openapi: 3.0.0
+paths:
+  /config:
+    get:
+      operationId: getAetherConfiguration
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AetherModel'
+          description: GET OK 200
+      summary: GET /ap-list

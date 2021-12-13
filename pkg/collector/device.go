@@ -28,10 +28,25 @@ func (d *Device) collect(period time.Duration, site string) {
 			if count != 5 {
 				deviceConnectedStatus.WithLabelValues("Active", site, d.Sim).Set(1)
 			} else {
-				deviceConnectedStatus.WithLabelValues("Inactive", site, d.Sim).Set(0)
+				deviceConnectedStatus.WithLabelValues("Active", site, d.Sim).Set(0)
 			}
-			time.Sleep(period)
+			time.Sleep(period * 3)
 		}
+	}()
+
+	go func() {
+			time.Sleep(period*2)
+			deviceConnectionEventCore.WithLabelValues("some core event", "some colour", site, d.Sim).Set(1)
+	}()
+
+	go func() {
+		time.Sleep(period*4)
+		deviceConnectionEventRan.WithLabelValues("some ran event", site, d.Sim).Set(1)
+	}()
+
+	go func() {
+		time.Sleep(period*6)
+		deviceConnectionEventFabric.WithLabelValues("some fabric event", site, d.Sim).Set(1)
 	}()
 }
 
@@ -40,4 +55,19 @@ var (
 		Name: "device_connected_status",
 		Help: "Device Status",
 	}, []string{"device_status", "site", "iccid"})
+
+	deviceConnectionEventCore = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "device_connection_event_core",
+		Help: "Device Connection Event Core",
+	}, []string{"msg", "colour", "site", "iccid"})
+
+	deviceConnectionEventRan = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "device_connection_event_ran",
+		Help: "Device Connection Event Ran",
+	}, []string{"msg", "site", "iccid"})
+
+	deviceConnectionEventFabric = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "device_connection_event_fabric",
+		Help: "Device Connection Event Fabric",
+	}, []string{"msg", "site", "iccid"})
 )

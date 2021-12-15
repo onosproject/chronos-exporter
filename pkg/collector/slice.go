@@ -12,7 +12,7 @@ import (
 )
 
 func (s *Slice) collect(period time.Duration, site string) {
-
+	log.Infof("Starting collector for Slice %s", s.SliceId)
 	// TODO: add in slice metrics generation
 	go func() {
 		minThroughput := 100000
@@ -29,21 +29,22 @@ func (s *Slice) collect(period time.Duration, site string) {
 		maxPacket := 800
 		for {
 			packets := float64(rand.Intn(maxPacket - minPacket) + minPacket)
-			sliceThroughputPackets.WithLabelValues(s.DisplayName, site).Set(packets)
+			sliceThroughputPackets.WithLabelValues(s.SliceId, site).Set(packets)
 			time.Sleep(period/10)
 		}
 	}()
 
 	go func() {
-		minLatency := 10
+		minLatency := 15
 		maxLatency := 25
 		for {
 			latency := float64(rand.Intn(maxLatency - minLatency) + minLatency)
-			if latency != 17 {
-				sliceLatencyEndToEnd.WithLabelValues(s.DisplayName, site).Set(latency)
+			randomNumber := rand.Intn(100)
+			if randomNumber != 17 {
+				sliceLatencyEndToEnd.WithLabelValues(s.SliceId, site).Set(latency)
 				time.Sleep(period/10)
 			} else {
-				sliceLatencyEndToEnd.WithLabelValues(s.DisplayName, site).Set(100)
+				sliceLatencyEndToEnd.WithLabelValues(s.SliceId, site).Set(100)
 				randomNum := rand.Intn(10)
 				time.Sleep(time.Duration(randomNum) * period)
 			}

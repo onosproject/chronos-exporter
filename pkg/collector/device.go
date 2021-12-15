@@ -14,37 +14,49 @@ import (
 func (d *Device) collect(period time.Duration, site string) {
 	log.Infof("Starting collector for Device %s", d.SerialNumber)
 	go func() {
-		for {
-			count := float64(rand.Intn(10))
 			if d.Sim != nil {
-				if count != 5 {
-					deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim).Set(1)
-				} else {
-					deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim).Set(0)
+				for {
+					count := float64(rand.Intn(100))
+					if count != 5 {
+						deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim, d.SerialNumber).Set(1)
+					} else {
+						deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim, d.SerialNumber).Set(0)
+					}
+					time.Sleep(period * 3)
 				}
 			}
-			time.Sleep(period * 3)
-		}
 	}()
 
 	go func() {
-			time.Sleep(period*2)
 			if d.Sim != nil {
-				deviceConnectionEventCore.WithLabelValues("some core event", "some colour", site, *d.Sim).Set(1)
+				for {
+					randNum := rand.Intn(100)
+					if randNum  > 20 && randNum < 30 {
+						deviceConnectionEventCore.WithLabelValues("some core event", "Red", site, *d.Sim, d.SerialNumber).Set(1)
+					}
+				}
 			}
 	}()
 
 	go func() {
-		time.Sleep(period*4)
 		if d.Sim != nil {
-			deviceConnectionEventRan.WithLabelValues("some ran event", site, *d.Sim).Set(1)
+			for {
+				randNum := rand.Intn(100)
+				if randNum > 10 && randNum < 15 {
+					deviceConnectionEventRan.WithLabelValues("some ran event", "Blue", site, *d.Sim, d.SerialNumber).Set(1)
+				}
+			}
 		}
 	}()
 
 	go func() {
-		time.Sleep(period*6)
 		if d.Sim != nil {
-			deviceConnectionEventFabric.WithLabelValues("some fabric event", site, *d.Sim).Set(1)
+			for {
+				randNum := rand.Intn(100)
+				if randNum > 60 && randNum < 70 {
+					deviceConnectionEventFabric.WithLabelValues("some fabric event", "Green", site, *d.Sim, d.SerialNumber).Set(1)
+				}
+			}
 		}
 	}()
 }
@@ -53,20 +65,20 @@ var (
 	deviceConnectedStatus = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connected_status",
 		Help: "Device Status",
-	}, []string{"device_status", "site", "iccid"})
+	}, []string{"device_status", "site", "iccid", "serial_number"})
 
 	deviceConnectionEventCore = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_core",
 		Help: "Device Connection Event Core",
-	}, []string{"msg", "colour", "site", "iccid"})
+	}, []string{"msg", "colour", "site", "iccid", "serial_number"})
 
 	deviceConnectionEventRan = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_ran",
 		Help: "Device Connection Event Ran",
-	}, []string{"msg", "site", "iccid"})
+	}, []string{"msg", "colour", "site", "iccid", "serial_number"})
 
 	deviceConnectionEventFabric = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_fabric",
 		Help: "Device Connection Event Fabric",
-	}, []string{"msg", "site", "iccid"})
+	}, []string{"msg", "colour", "site", "iccid", "serial_number"})
 )

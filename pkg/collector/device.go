@@ -13,50 +13,53 @@ import (
 
 func (d *Device) collect(period time.Duration, site string) {
 	log.Infof("Starting collector for Device %s", d.SerialNumber)
+	if d.Sim == nil {
+		return
+	}
+	sn := d.SerialNumber
+	sim := *d.Sim
 	go func() {
-			if d.Sim != nil {
-				for {
-					count := float64(rand.Intn(100))
-					if count != 5 {
-						deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim, d.SerialNumber).Set(1)
-					} else {
-						deviceConnectedStatus.WithLabelValues("Active", site, *d.Sim, d.SerialNumber).Set(0)
-					}
-					time.Sleep(period * 3)
-				}
+		for {
+			count := float64(rand.Intn(100))
+			if count != 5 {
+				deviceConnectedStatus.WithLabelValues("Active", site, sim, sn).Set(1)
+			} else {
+				deviceConnectedStatus.WithLabelValues("Active", site, sim, sn).Set(0)
 			}
-	}()
-
-	go func() {
-			if d.Sim != nil {
-				for {
-					randNum := rand.Intn(100)
-					if randNum  > 20 && randNum < 30 {
-						deviceConnectionEventCore.WithLabelValues("some core event", "Red", site, *d.Sim, d.SerialNumber).Set(1)
-					}
-				}
-			}
-	}()
-
-	go func() {
-		if d.Sim != nil {
-			for {
-				randNum := rand.Intn(100)
-				if randNum > 10 && randNum < 15 {
-					deviceConnectionEventRan.WithLabelValues("some ran event", "Blue", site, *d.Sim, d.SerialNumber).Set(1)
-				}
-			}
+				time.Sleep(period * 3)
 		}
 	}()
 
 	go func() {
-		if d.Sim != nil {
-			for {
-				randNum := rand.Intn(100)
-				if randNum > 60 && randNum < 70 {
-					deviceConnectionEventFabric.WithLabelValues("some fabric event", "Green", site, *d.Sim, d.SerialNumber).Set(1)
-				}
+		for {
+			randNum := rand.Intn(100)
+			if randNum  > 20 && randNum < 30 {
+				deviceConnectionEventCore.WithLabelValues("some core event", site, sim, sn).
+					Set(float64(rand.Intn(5) +1 ))
 			}
+			time.Sleep(time.Duration(rand.Intn(60) +1))
+		}
+	}()
+
+	go func() {
+		for {
+			randNum := rand.Intn(100)
+			if randNum > 10 && randNum < 15 {
+				deviceConnectionEventRan.WithLabelValues("some ran event", site, sim, sn).
+					Set(float64(rand.Intn(5) + 1))
+			}
+			time.Sleep(time.Duration(rand.Intn(60) + 1))
+		}
+	}()
+
+	go func() {
+		for {
+			randNum := rand.Intn(100)
+			if randNum > 60 && randNum < 70 {
+				deviceConnectionEventFabric.WithLabelValues("some fabric event", site, sim, sn).
+					Set(float64(rand.Intn(5) + 1))
+			}
+			time.Sleep(time.Duration(rand.Intn(60) + 1))
 		}
 	}()
 }
@@ -70,15 +73,15 @@ var (
 	deviceConnectionEventCore = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_core",
 		Help: "Device Connection Event Core",
-	}, []string{"msg", "colour", "site", "iccid", "serial_number"})
+	}, []string{"msg", "site", "iccid", "serial_number"})
 
 	deviceConnectionEventRan = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_ran",
 		Help: "Device Connection Event Ran",
-	}, []string{"msg", "colour", "site", "iccid", "serial_number"})
+	}, []string{"msg", "site", "iccid", "serial_number"})
 
 	deviceConnectionEventFabric = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_fabric",
 		Help: "Device Connection Event Fabric",
-	}, []string{"msg", "colour", "site", "iccid", "serial_number"})
+	}, []string{"msg", "site", "iccid", "serial_number"})
 )

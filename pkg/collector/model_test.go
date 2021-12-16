@@ -25,4 +25,7 @@ func Test_LoadModel(t *testing.T) {
 	assert.NotNil(t, devices)
 	assert.Equal(t, 2, len(*devices))
 	assert.Equal(t, "752365A", (*devices)[0])
+
+	assert.Equal(t, "enterprise-1", model.Enterprise.EnterpriseId)
+	assert.Equal(t, "Enterprise 1", model.Enterprise.DisplayName)
 }

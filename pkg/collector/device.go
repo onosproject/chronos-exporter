@@ -37,7 +37,7 @@ func (d *Device) collect(period time.Duration, site string) {
 				deviceConnectionEventCore.WithLabelValues("some core event", site, sim, sn).
 					Set(float64(rand.Intn(5) +1 ))
 			}
-			time.Sleep(time.Duration(rand.Intn(60) +1))
+			time.Sleep(time.Second * time.Duration(rand.Intn(60) +1))
 		}
 	}()
 
@@ -48,7 +48,7 @@ func (d *Device) collect(period time.Duration, site string) {
 				deviceConnectionEventRan.WithLabelValues("some ran event", site, sim, sn).
 					Set(float64(rand.Intn(5) + 1))
 			}
-			time.Sleep(time.Duration(rand.Intn(60) + 1))
+			time.Sleep(time.Second * time.Duration(rand.Intn(60) + 1))
 		}
 	}()
 
@@ -59,7 +59,7 @@ func (d *Device) collect(period time.Duration, site string) {
 				deviceConnectionEventFabric.WithLabelValues("some fabric event", site, sim, sn).
 					Set(float64(rand.Intn(5) + 1))
 			}
-			time.Sleep(time.Duration(rand.Intn(60) + 1))
+			time.Sleep(time.Second * time.Duration(rand.Intn(60) + 1))
 		}
 	}()
 }

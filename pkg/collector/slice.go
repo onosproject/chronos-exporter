@@ -45,8 +45,7 @@ func (s *Slice) collect(period time.Duration, site string) {
 				time.Sleep(period/10)
 			} else {
 				sliceLatencyEndToEnd.WithLabelValues(sliceId, site).Set(100)
-				randomNum := rand.Intn(10)
-				time.Sleep(time.Duration(randomNum) * period)
+				time.Sleep(period/10)
 			}
 		}
 	}()

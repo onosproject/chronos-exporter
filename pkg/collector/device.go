@@ -40,7 +40,7 @@ func (d *Device) collect(period time.Duration, site string) {
 			if randNum  > 20 && randNum < 30 {
 				mu.Lock()
 				counter++
-				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("core event number-%d", counter), site, sim, sn).
+				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("%s: core event number-%d", sn, counter), site, sim, sn).
 					Set(float64(rand.Intn(5) +1 ))
 				mu.Unlock()
 			}
@@ -54,7 +54,7 @@ func (d *Device) collect(period time.Duration, site string) {
 			if randNum > 10 && randNum < 15 {
 				mu.Lock()
 				counter++
-				deviceConnectionEventRan.WithLabelValues(fmt.Sprintf("ran event number-%d", counter), site, sim, sn).
+				deviceConnectionEventRan.WithLabelValues(fmt.Sprintf("%s: ran event number-%d", sn, counter), site, sim, sn).
 					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}
@@ -68,7 +68,7 @@ func (d *Device) collect(period time.Duration, site string) {
 			if randNum > 60 && randNum < 70 {
 				mu.Lock()
 				counter++
-				deviceConnectionEventFabric.WithLabelValues(fmt.Sprintf("fabric event number-%d", counter), site, sim, sn).
+				deviceConnectionEventFabric.WithLabelValues(fmt.Sprintf("%s: fabric event number-%d", sn, counter), site, sim, sn).
 					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}

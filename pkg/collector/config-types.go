@@ -7,6 +7,7 @@ package collector
 // Top level configuration
 type AetherModel struct {
 	Applications []Application `json:"applications"`
+	Enterprise   Enterprise    `json:"enterprise"`
 
 	// a collection of sites
 	Sites []Site `json:"sites"`
@@ -33,6 +34,13 @@ type DeviceGroup struct {
 	DeviceGroupId string    `json:"device-group-id" yaml:"device-group-id"`
 	Devices       *[]string `json:"devices,omitempty"`
 	DisplayName   string    `json:"display-name" yaml:"display-name"`
+}
+
+// Enterprise defines model for Enterprise.
+type Enterprise struct {
+	DisplayName  string  `json:"display-name" yaml:"display-name"`
+	EnterpriseId string  `json:"enterprise-id" yaml:"enterprise-id"`
+	Image        *string `json:"image,omitempty" yaml:"image,omitempty"`
 }
 
 // Sim defines model for Sim.

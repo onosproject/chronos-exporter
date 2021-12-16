@@ -53,3 +53,7 @@ applications:
     display-name: App 1
   - application-id: app-2
     display-name: App 2
+enterprise:
+  enterprise-id: enterprise-1
+  display-name: Enterprise 1
+  image: test.png

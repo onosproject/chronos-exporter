@@ -5,14 +5,18 @@
 package collector
 
 import (
+	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"math/rand"
+	"sync"
 	"time"
 )
+var counter int = 0
 
 func (d *Device) collect(period time.Duration, site string) {
 	log.Infof("Starting collector for Device %s", d.SerialNumber)
+	var mu sync.Mutex
 	if d.Sim == nil {
 		return
 	}
@@ -34,8 +38,11 @@ func (d *Device) collect(period time.Duration, site string) {
 		for {
 			randNum := rand.Intn(100)
 			if randNum  > 20 && randNum < 30 {
-				deviceConnectionEventCore.WithLabelValues("some core event", site, sim, sn).
+				mu.Lock()
+				counter++
+				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("core event number-%d", counter), site, sim, sn).
 					Set(float64(rand.Intn(5) +1 ))
+				mu.Unlock()
 			}
 			time.Sleep(time.Second * time.Duration(rand.Intn(60) +1))
 		}
@@ -45,8 +52,11 @@ func (d *Device) collect(period time.Duration, site string) {
 		for {
 			randNum := rand.Intn(100)
 			if randNum > 10 && randNum < 15 {
-				deviceConnectionEventRan.WithLabelValues("some ran event", site, sim, sn).
+				mu.Lock()
+				counter++
+				deviceConnectionEventRan.WithLabelValues(fmt.Sprintf("ran event number-%d", counter), site, sim, sn).
 					Set(float64(rand.Intn(5) + 1))
+				mu.Unlock()
 			}
 			time.Sleep(time.Second * time.Duration(rand.Intn(60) + 1))
 		}
@@ -56,8 +66,11 @@ func (d *Device) collect(period time.Duration, site string) {
 		for {
 			randNum := rand.Intn(100)
 			if randNum > 60 && randNum < 70 {
-				deviceConnectionEventFabric.WithLabelValues("some fabric event", site, sim, sn).
+				mu.Lock()
+				counter++
+				deviceConnectionEventFabric.WithLabelValues(fmt.Sprintf("fabric event number-%d", counter), site, sim, sn).
 					Set(float64(rand.Intn(5) + 1))
+				mu.Unlock()
 			}
 			time.Sleep(time.Second * time.Duration(rand.Intn(60) + 1))
 		}

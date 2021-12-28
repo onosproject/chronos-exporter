@@ -15,6 +15,7 @@ var log = logging.GetLogger("main")
 
 func main() {
 	configPath := flag.String("config", "", "path to configuration file")
+	imagePath := flag.String("imagePath", "/opt/images/", "path to the images")
 	ready := make(chan bool)
 	flag.Parse()
 
@@ -28,7 +29,7 @@ func main() {
 		log.Fatalf("Cannot start without a valid config %v", err)
 	}
 
-	mgr := manager.NewManager(configJSON)
+	mgr := manager.NewManager(configJSON, *imagePath)
 	mgr.Run()
 
 	<-ready

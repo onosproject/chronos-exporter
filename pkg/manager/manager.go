@@ -5,8 +5,7 @@
 package manager
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/onosproject/chronos-exporter/pkg/collector"
 	"github.com/onosproject/onos-lib-go/pkg/logging"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -18,9 +17,10 @@ var log = logging.GetLogger("manager")
 // Manager single point of entry for the topology system.
 type Manager struct {
 	Config collector.AetherModel
+	ImagePath string
 }
 
-func NewManager(configData []byte) *Manager {
+func NewManager(configData []byte, imagePath string) *Manager {
 	modelConfig, err := collector.LoadModel(configData)
 	if err != nil {
 		log.Fatal("Error unmarshalling configuration %v", err)
@@ -28,37 +28,72 @@ func NewManager(configData []byte) *Manager {
 	log.Infof("Config model loaded, with %d sites", len(modelConfig.Sites))
 	return &Manager{
 		Config: *modelConfig,
+		ImagePath: imagePath,
 	}
 }
 
 func (mgr *Manager) Run() {
+	router := gin.New()
 	mgr.Config.Collect()
 
-	http.Handle("/metrics", promhttp.Handler())
-	http.HandleFunc("/config", mgr.handleConfig)
-	if err := http.ListenAndServe(":2112", nil); err != nil {
+	router.GET("/metrics", prometheusHandler())
+	router.GET("/config", mgr.handleConfig)
+	router.OPTIONS("/config", mgr.handleConfig)
+
+	router.GET("/images/:image", mgr.handleImage)
+	router.OPTIONS("/images/:image", mgr.handleImage)
+
+	err := router.Run("0.0.0.0:" + "2112")
+	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func (mgr *Manager) handleConfig(w http.ResponseWriter, req *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
-	switch req.Method {
+func prometheusHandler() gin.HandlerFunc {
+	h := promhttp.Handler()
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	}
+}
+
+func (mgr *Manager) handleConfig(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "http://localhost:4200")
+	switch c.Request.Method {
 	case "OPTIONS":
-		w.Header().Set("Vary", "Origin")
-		w.Header().Set("Vary", "Access-Control-Request-Method")
-		w.Header().Set("Vary", "Access-Control-Request-Headers")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token, Authorization")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
-		w.WriteHeader(http.StatusOK)
+		c.Header("Vary", "Origin")
+		c.Header("Vary", "Access-Control-Request-Method")
+		c.Header("Vary", "Access-Control-Request-Headers")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token, Authorization")
+		c.Header("Access-Control-Allow-Methods", "GET, OPTIONS")
+		c.Status(http.StatusOK)
 	case "GET":
-		w.Header().Set("Content-Type", "application/json")
-		configJson, err := json.MarshalIndent(mgr.Config, " ", " ")
-		if err != nil {
-			fmt.Fprintf(w, "error marshalling model %s", err)
-		}
-		fmt.Fprintf(w, "%s", configJson)
+		c.Header("Content-Type", "application/json")
+		c.JSON(http.StatusOK, mgr.Config)
 	default:
-		w.WriteHeader(http.StatusNotImplemented)
+		c.Status(http.StatusNotImplemented)
+	}
+}
+
+func (mgr *Manager) handleImage(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "http://localhost:4200")
+	switch c.Request.Method {
+	case "OPTIONS":
+		c.Header("Vary", "Origin")
+		c.Header("Vary", "Access-Control-Request-Method")
+		c.Header("Vary", "Access-Control-Request-Headers")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token, Authorization")
+		c.Header("Access-Control-Allow-Methods", "GET, OPTIONS")
+		c.Status(http.StatusOK)
+	case "GET":
+		c.Header("Content-Type", "image/png")
+		image, okay := c.Params.Get("image")
+		if !okay {
+			c.String(http.StatusNotFound, "error")
+		}
+		imagePath := mgr.ImagePath + image
+		c.File(imagePath)
+	default:
+		c.Status(http.StatusNotImplemented)
 	}
 }

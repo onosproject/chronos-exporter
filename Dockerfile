@@ -29,4 +29,5 @@ RUN mkdir $HOME
 WORKDIR $HOME
 
 COPY --from=build /go/bin/chronos-exporter /usr/local/bin/
+COPY ./images /opt/images
 

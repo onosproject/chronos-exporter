@@ -40,7 +40,7 @@ func (d *Device) collect(period time.Duration, site string) {
 			if randNum  > 20 && randNum < 30 {
 				mu.Lock()
 				counter++
-				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("%s: core event number-%d", sn, counter), site, sim, sn).
+				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("%s: core event number-%d", sn, counter), site, sim, sn, time.Now().Format(time.RFC3339Nano)).
 					Set(float64(rand.Intn(5) +1 ))
 				mu.Unlock()
 			}
@@ -54,7 +54,7 @@ func (d *Device) collect(period time.Duration, site string) {
 			if randNum > 10 && randNum < 15 {
 				mu.Lock()
 				counter++
-				deviceConnectionEventRan.WithLabelValues(fmt.Sprintf("%s: ran event number-%d", sn, counter), site, sim, sn).
+				deviceConnectionEventRan.WithLabelValues(fmt.Sprintf("%s: ran event number-%d", sn, counter), site, sim, sn, time.Now().Format(time.RFC3339Nano)).
 					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}
@@ -68,7 +68,7 @@ func (d *Device) collect(period time.Duration, site string) {
 			if randNum > 60 && randNum < 70 {
 				mu.Lock()
 				counter++
-				deviceConnectionEventFabric.WithLabelValues(fmt.Sprintf("%s: fabric event number-%d", sn, counter), site, sim, sn).
+				deviceConnectionEventFabric.WithLabelValues(fmt.Sprintf("%s: fabric event number-%d", sn, counter), site, sim, sn, time.Now().Format(time.RFC3339Nano)).
 					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}
@@ -86,15 +86,15 @@ var (
 	deviceConnectionEventCore = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_core",
 		Help: "Device Connection Event Core",
-	}, []string{"msg", "site", "iccid", "serial_number"})
+	}, []string{"msg", "site", "iccid", "serial_number", "time"})
 
 	deviceConnectionEventRan = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_ran",
 		Help: "Device Connection Event Ran",
-	}, []string{"msg", "site", "iccid", "serial_number"})
+	}, []string{"msg", "site", "iccid", "serial_number", "time"})
 
 	deviceConnectionEventFabric = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "device_connection_event_fabric",
 		Help: "Device Connection Event Fabric",
-	}, []string{"msg", "site", "iccid", "serial_number"})
+	}, []string{"msg", "site", "iccid", "serial_number", "time"})
 )

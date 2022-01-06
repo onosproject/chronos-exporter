@@ -106,6 +106,39 @@ components:
           maxLength: 50
         image:
           type: string
+        site-plans:
+          properties:
+            isometric:
+              type: boolean
+            origin:
+              type: string
+              enum:
+                - ORIGIN_CENTROID
+                - ORIGIN_TOP_LEFT
+            site-plan-list:
+              items:
+                $ref: '#/components/schemas/SitePlan'
+              uniqueItems: true
+              x-keys:
+                - id
+              type: array
+            layers:
+              description: Each SitePlan will be expected to have layers corresponding to the
+                'layer-id's given here. The 'display-name' will be the tag given on the UI.
+                Examples of common layers are 'Walls','Text','SmallCells','Beam','Devices'
+              items:
+                properties:
+                  layer-id:
+                    type: string
+                  display-name:
+                    type: string
+                required:
+                  - layer-id
+              type: array
+          required:
+            - centre
+            - isometric
+          type: object
         small-cells:
           type: array
           x-keys:
@@ -152,6 +185,39 @@ components:
         - device-groups
         - devices
         - sims
+    SitePlan:
+      properties:
+        id:
+          description: The site plan identifier
+          type: string
+        svg-file:
+          type: string
+        offsets:
+          description: some sites will have multiple buildings and multiple floors
+            The X and Y offset will allow plans to be shown alongside each other.
+            The Z Offset will allow plans to be stacked over each other in an isometric view
+          properties:
+            x-offset:
+              description: the x offset from the site origin
+              type: integer
+              format: uint32
+            y-offset:
+              description: the y offset from the site origin
+              type: integer
+              format: uint32
+            z-offset:
+              description: the z offset from the site origin
+              type: integer
+              format: uint32
+          required:
+            - x-offset
+            - y-offset
+            - z-offset
+          type: object
+      required:
+        - id
+        - svg-file
+      type: object
     SmallCell:
       type: object
       properties:

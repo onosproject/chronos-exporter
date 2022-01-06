@@ -30,4 +30,5 @@ WORKDIR $HOME
 
 COPY --from=build /go/bin/chronos-exporter /usr/local/bin/
 COPY ./images /opt/images
+COPY ./site-plans /opt/site-plans
 

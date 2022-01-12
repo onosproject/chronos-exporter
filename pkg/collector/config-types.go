@@ -28,12 +28,13 @@ type Application struct {
 
 // Device defines model for Device.
 type Device struct {
-	DisplayName  string  `json:"display-name" yaml:"display-name"`
-	Imei         string  `json:"imei" yaml:"imei"`
-	Location     *string `json:"location,omitempty" yaml:"location,omitempty"`
-	SerialNumber string  `json:"serial-number" yaml:"serial-number"`
-	Sim          *string `json:"sim,omitempty" yaml:"sim,omitempty"`
-	Type         string  `json:"type" yaml:"type"`
+	DisplayName  string    `json:"display-name" yaml:"display-name"`
+	Imei         string    `json:"imei" yaml:"imei"`
+	Location     *string   `json:"location,omitempty" yaml:"location,omitempty"`
+	Position     *Position `json:"position,omitempty" yaml:"position,omitempty"`
+	SerialNumber string    `json:"serial-number" yaml:"serial-number"`
+	Sim          *string   `json:"sim,omitempty" yaml:"sim,omitempty"`
+	Type         string    `json:"type" yaml:"type"`
 }
 
 // DeviceGroup defines model for DeviceGroup.
@@ -48,6 +49,14 @@ type Enterprise struct {
 	DisplayName  string  `json:"display-name" yaml:"display-name"`
 	EnterpriseId string  `json:"enterprise-id" yaml:"enterprise-id"`
 	Image        *string `json:"image,omitempty" yaml:"image,omitempty"`
+}
+
+// Position defines model for Position.
+type Position struct {
+	DisplayName *string `json:"display-name,omitempty" yaml:"display-name,omitempty"`
+	PositionX   int     `json:"position-x" yaml:"position-x"`
+	PositionY   int     `json:"position-y" yaml:"position-y"`
+	SitePlan    string  `json:"site-plan" yaml:"site-plan"`
 }
 
 // Sim defines model for Sim.
@@ -67,7 +76,7 @@ type Site struct {
 	SitePlans    *struct {
 		Isometric bool `json:"isometric" yaml:"isometric"`
 
-		// Each SitePlan will be expected to have layers corresponding to the 'layer-id's given here. The 'display-name' will be the tag given on the UI. Examples of common layers are 'Walls','Text','SmallCells','Beam','Devices'
+		// Each SitePlan will be expected to have layers corresponding to the 'layer-id's given here. The 'display-name' will be the tag given on the UI. Examples of common layers are 'Walls','Text'
 		Layers *[]struct {
 			DisplayName *string `json:"display-name,omitempty" yaml:"display-name,omitempty"`
 			LayerId     string  `json:"layer-id" yaml:"layer-id"`
@@ -113,6 +122,7 @@ type Slice struct {
 
 // SmallCell defines model for SmallCell.
 type SmallCell struct {
-	DisplayName string `json:"display-name" yaml:"display-name"`
-	SmallCellId string `json:"small-cell-id" yaml:"small-cell-id"`
+	DisplayName string    `json:"display-name" yaml:"display-name"`
+	Position    *Position `json:"position,omitempty" yaml:"position,omitempty"`
+	SmallCellId string    `json:"small-cell-id" yaml:"small-cell-id"`
 }

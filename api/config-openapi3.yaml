@@ -3,6 +3,20 @@
 # SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
 components:
   schemas:
+    Position:
+      properties:
+        position-x:
+          type: integer
+        position-y:
+          type: integer
+        display-name:
+          type: string
+        site-plan:
+          type: string
+      required:
+        - position-x
+        - position-y
+        - site-plan
     Application:
       type: object
       properties:
@@ -36,6 +50,8 @@ components:
           type: string
         sim:
           type: string
+        position:
+          $ref: '#/components/schemas/Position'
       required:
         - serial-number
         - imei
@@ -125,7 +141,7 @@ components:
             layers:
               description: Each SitePlan will be expected to have layers corresponding to the
                 'layer-id's given here. The 'display-name' will be the tag given on the UI.
-                Examples of common layers are 'Walls','Text','SmallCells','Beam','Devices'
+                Examples of common layers are 'Walls','Text'
               items:
                 properties:
                   layer-id:
@@ -228,6 +244,8 @@ components:
         display-name:
           type: string
           maxLength: 50
+        position:
+          $ref: '#/components/schemas/Position'
       required:
         - small-cell-id
         - display-name

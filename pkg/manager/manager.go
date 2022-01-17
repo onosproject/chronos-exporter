@@ -11,7 +11,6 @@ import (
 	"github.com/onosproject/onos-lib-go/pkg/logging"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"net/http"
-	"time"
 )
 
 var log = logging.GetLogger("manager")
@@ -37,26 +36,19 @@ func NewManager(configData []byte, imagePath, sitePlanPath string) *Manager {
 }
 
 func (mgr *Manager) Run() {
-	router := gin.New()
+	router := gin.Default()
 	mgr.Config.Collect()
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://localhost:4200"}
+	corsConfig.AllowAllOrigins = false
+	corsConfig.AllowCredentials = true
+	router.Use(cors.New(corsConfig))
 
 	router.GET("/metrics", prometheusHandler())
 	router.GET("/config", mgr.handleConfig)
 	router.GET("/images/:image", mgr.handleImage)
 	router.GET("/site-plans/:site/:site-plan", mgr.handleSitePlan)
-
-	router.Use(cors.New(cors.Config{
-		AllowAllOrigins: false,
-		AllowOrigins:    []string{"http://localhost:4200"},
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:4200"
-		},
-		MaxAge:           12 * time.Hour,
-		AllowMethods:     []string{"GET"},
-		AllowHeaders:     []string{"Origin"},
-		AllowCredentials: true,
-		ExposeHeaders:    []string{"Content-Length"},
-	}))
 
 	err := router.Run("0.0.0.0:" + "2112")
 	if err != nil {

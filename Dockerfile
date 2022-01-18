@@ -19,7 +19,7 @@ RUN if [ -n "$LOCAL_AETHER_MODELS" ] ; then \
 RUN cat $ADAPTER_ROOT/go.mod
 
 RUN cd $ADAPTER_ROOT && GO111MODULE=on go build -o /go/bin/chronos-exporter ./cmd/chronos-exporter
-RUN cd $ADAPTER_ROOT && GO111MODULE=on go build -o /go/bin/rasa-server ./cmd/rasa-server
+RUN cd $ADAPTER_ROOT && GO111MODULE=on go build -o /go/bin/rasa-model-server ./cmd/rasa-model-server
 
 FROM alpine:3.11
 RUN apk add bash openssl curl libc6-compat
@@ -30,6 +30,6 @@ RUN mkdir $HOME
 WORKDIR $HOME
 
 COPY --from=build /go/bin/chronos-exporter /usr/local/bin/
-COPY --from=build /go/bin/rasa-server /usr/local/bin/
+COPY --from=build /go/bin/rasa-model-server /usr/local/bin/
 
 COPY ./rasa-models /opt/rasa-models

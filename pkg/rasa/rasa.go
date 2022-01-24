@@ -12,6 +12,7 @@ import (
 	"github.com/onosproject/onos-lib-go/pkg/logging"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 var log = logging.GetLogger("rasa")
@@ -35,6 +36,11 @@ func (rs *Rasa) Run() {
 	corsConfig.AllowCredentials = true
 	router.Use(cors.New(corsConfig))
 
+	//Added to server readinessProbe and livenessProbe
+	router.GET("/models", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
+
 	router.GET("/models/:model", rs.handleModel)
 
 	err := router.Run("0.0.0.0:" + "8080")
@@ -53,11 +59,22 @@ func (rs *Rasa) handleModel(c *gin.Context) {
 		ifNonMatchValue := c.Request.Header.Get("If-None-Match")
 
 		modelPath := rs.ModelPath + model + ".tar.gz"
+
+		//Check for the file exist or not
+		_, err := os.Stat(modelPath)
+		if os.IsNotExist(err) {
+			c.Status(http.StatusNotFound)
+			return
+		}
+
 		log.Infof("Serving file %s", modelPath)
+
+		////Check hash value for the model file
 		hashValue, err := getHashValue(modelPath)
 		if err != nil {
 				log.Error(err.Error())
 				c.Status(http.StatusInternalServerError)
+				return
 		}
 
 		if ifNonMatchValue == hashValue {

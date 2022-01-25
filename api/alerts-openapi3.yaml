@@ -1,0 +1,89 @@
+# SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+components:
+  schemas:
+    AetherAlerts:
+      description: A set of alerts for a configpath
+      items:
+        $ref: '#/components/schemas/Alert'
+      uniqueItems: true
+      x-keys:
+        - alert-id
+      type: array
+    Alert:
+      properties:
+        alert-id:
+          description: An auto-generated UUID value to identify the alert
+          type: string
+          format: uuid
+        configpath:
+          type: string
+        message:
+          description: A description of what error condition is being represented
+          type: string
+        raised-at:
+          description: The time the alert was originally raised
+          type: string
+          format: date-time
+        cleared-at:
+          description: The time the alert was cleared
+          type: string
+          format: date-time
+        severity:
+          description: The severity of the Alert
+          type: string
+          enum:
+            - INFO
+            - WARNING
+            - CRITICAL
+      required:
+        - alert-id
+        - configpath
+        - message
+        - raised-at
+        - severity
+      type: object
+info:
+  contact:
+    email: info@opennetworking.org
+    name: Open Networking Foundation
+    url: https://opennetworking.org
+  description: Chronos alerts for Aether Enterprise Portal
+  license:
+    name: LicenseRef-ONF-Member-Only-1.0
+    url: https://opennetworking.org/wp-content/uploads/2020/06/ONF-Member-Only-Software-License-v1.0.pdf
+  termsOfService: https://opennetworking.org/wp-content/uploads/2019/02/ONF-Licensing-and-IPR-FAQ-2020-06.pdf
+  title: Chronos Alert API
+  version: 0.0.1
+openapi: 3.0.0
+paths:
+  /alerts:
+    description: List of all Alerts
+    get:
+      operationId: getAetherAlerts
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AetherAlerts'
+          description: GET OK 200
+      summary: GET /alerts
+  /alerts/{alert-id}/clear:
+    description: Clear an alert
+    post:
+      operationId: clearAlert
+      responses:
+        "200":
+          description: GET OK 200
+      summary: POST /alerts/alert/clear
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {alert-id}
+        in: path
+        name: alert-id
+        required: true

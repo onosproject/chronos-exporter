@@ -2,6 +2,57 @@
 #
 # SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
 components:
+  requestBodies:
+    RequestBody_ApplicationsApplication:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Application'
+    RequestBody_SitesSite:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Site'
+    RequestBody_SitesSiteSlicesSlice:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Slice'
+    RequestBody_SitesSiteSlicesSliceDeviceGroupsDeviceGroup:
+      content:
+        application/json:
+          schema:
+            type: string
+    RequestBody_SitesSiteSlicesSliceApplicationsApplication:
+      content:
+        application/json:
+          schema:
+            type: string
+    RequestBody_SitesSiteSmallCellsSmallCell:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SmallCell'
+    RequestBody_SitesSiteDeviceGroupsDeviceGroup:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceGroup'
+    RequestBody_SitesSiteDeviceGroupsDeviceGroupDevicesDevice:
+      content:
+        application/json:
+          schema:
+            type: string
+    RequestBody_SitesSiteDevicesDevice:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Device'
+    RequestBody_SitesSiteSimsSim:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Sim'
   schemas:
     Position:
       properties:
@@ -295,13 +346,13 @@ info:
     email: info@opennetworking.org
     name: Open Networking Foundation
     url: https://opennetworking.org
-  description: Temporary coniguration for Aether Enterprise Portal
+  description: Chronos configuration API for Aether Enterprise Portal
   license:
     name: LicenseRef-ONF-Member-Only-1.0
     url: https://opennetworking.org/wp-content/uploads/2020/06/ONF-Member-Only-Software-License-v1.0.pdf
   termsOfService: https://opennetworking.org/wp-content/uploads/2019/02/ONF-Licensing-and-IPR-FAQ-2020-06.pdf
-  title: Aether Enterprise Portal
-  version: 0.0.1
+  title: Chronos Config API
+  version: 0.0.2
 openapi: 3.0.0
 paths:
   /config:
@@ -314,4 +365,442 @@ paths:
               schema:
                 $ref: '#/components/schemas/AetherModel'
           description: GET OK 200
-      summary: GET /ap-list
+      summary: GET /config
+  /config/applications/{application-id}:
+    delete:
+      operationId: deleteApplicationsApplication
+      responses:
+        default:
+          description: ""
+      summary: DELETE /applications/application
+    description: Application
+    get:
+      operationId: getApplicationsApplication
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+          description: GET OK 200
+      summary: GET /applications/application
+    post:
+      operationId: postApplicationsApplication
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_ApplicationsApplication'
+      responses:
+        "201":
+          description: created
+      summary: POST /applications/application
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {application-id}
+        in: path
+        name: application-id
+        required: true
+  /config/sites/{site-id}:
+    delete:
+      operationId: deleteSitesSite
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site
+    description: Site
+    get:
+      operationId: getSitesSite
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+          description: GET OK 200
+      summary: GET /sites/site
+    post:
+      operationId: postSitesSite
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSite'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+  /config/sites/{site-id}/slices/{slice-id}:
+    delete:
+      operationId: deleteSitesSiteSlicesSlice
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/slices/slice
+    description: Site
+    get:
+      operationId: getSitesSiteSlicesSlice
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slice'
+          description: GET OK 200
+      summary: GET /sites/site/slices/slice
+    post:
+      operationId: postSitesSiteSlicesSlice
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteSlicesSlice'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/slices/slice
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {slice-id}
+        in: path
+        name: slice-id
+        required: true
+  /config/sites/{site-id}/slices/{slice-id}/device-groups/{dg-id}:
+    delete:
+      operationId: deleteSitesSiteSlicesSliceDeviceGroupsDeviceGroup
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/slices/slice/device-groups/device-group
+    description: Site
+    get:
+      operationId: getSitesSiteSlicesSliceDeviceGroupsDeviceGroup
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: GET OK 200
+      summary: GET /sites/site/slices/slice/device-groups/device-group
+    post:
+      operationId: postSitesSiteSlicesSliceDeviceGroupsDeviceGroup
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteSlicesSliceDeviceGroupsDeviceGroup'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/slices/slice/device-groups/device-group
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {slice-id}
+        in: path
+        name: slice-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {dg-id}
+        in: path
+        name: dg-id
+        required: true
+  /config/sites/{site-id}/device-groups/{device-group-id}/devices/{dev-id}:
+    delete:
+      operationId: deleteSitesSiteDeviceGroupsDeviceGroupDevicesDevice
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/device-groups/device-group/devices/device
+    description: Device
+    get:
+      operationId: getSitesSiteDeviceGroupsDeviceGroupDevicesDevice
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: GET OK 200
+      summary: GET /sites/site/device-groups/device-group/devices/device
+    post:
+      operationId: postSitesSiteDeviceGroupsDeviceGroupDevicesDevice
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteDeviceGroupsDeviceGroupDevicesDevice'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/device-groups/device-group/devices/device
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {dg-id}
+        in: path
+        name: device-group-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {dev-id}
+        in: path
+        name: dev-id
+        required: true
+  /config/sites/{site-id}/slices/{slice-id}/applications/{app-id}:
+    delete:
+      operationId: deleteSitesSiteSlicesSliceApplicationsApplication
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/slices/slice/applications/application
+    description: Site
+    get:
+      operationId: getSitesSiteSlicesSliceApplicationsApplication
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: GET OK 200
+      summary: GET /sites/site/slices/slice/applications/application
+    post:
+      operationId: postSitesSiteSlicesSliceApplicationsApplication
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteSlicesSliceApplicationsApplication'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/slices/slice/applications/application
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {slice-id}
+        in: path
+        name: slice-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {app-id}
+        in: path
+        name: app-id
+        required: true
+  /config/sites/{site-id}/small-cells/{small-cell-id}:
+    delete:
+      operationId: deleteSitesSiteSmallCellsSmallCell
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/small-cells/small-cell
+    description: Site
+    get:
+      operationId: getSitesSiteSmallCellsSmallCell
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmallCell'
+          description: GET OK 200
+      summary: GET /sites/site/small-cells/small-cell
+    post:
+      operationId: postSitesSiteSmallCellsSmallCell
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteSmallCellsSmallCell'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/small-cells/small-cell
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {slice-id}
+        in: path
+        name: small-cell-id
+        required: true
+  /config/sites/{site-id}/device-groups/{device-group-id}:
+    delete:
+      operationId: deleteSitesSiteDeviceGroupsDeviceGroup
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/device-groups/device-group
+    description: Site
+    get:
+      operationId: getSitesSiteDeviceGroupsDeviceGroup
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceGroup'
+          description: GET OK 200
+      summary: GET /sites/site/device-groups/device-group
+    post:
+      operationId: postSitesSiteDeviceGroupsDeviceGroup
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteDeviceGroupsDeviceGroup'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/device-groups/device-group
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {device-group-id}
+        in: path
+        name: device-group-id
+        required: true
+  /config/sites/{site-id}/devices/{serial-number}:
+    delete:
+      operationId: deleteSitesSiteDevicesDevice
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/devices/device
+    description: Site
+    get:
+      operationId: getSitesSiteDevicesDevice
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: GET OK 200
+      summary: GET /sites/site/devices/device
+    post:
+      operationId: postSitesSiteDevicesDevice
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteDevicesDevice'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/devices/device
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {serial-number}
+        in: path
+        name: serial-number
+        required: true
+  /config/sites/{site-id}/sims/{iccid}:
+    delete:
+      operationId: deleteSitesSiteSimsSim
+      responses:
+        default:
+          description: ""
+      summary: DELETE /sites/site/sims/sim
+    description: Site
+    get:
+      operationId: getSitesSiteSimsSim
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sim'
+          description: GET OK 200
+      summary: GET /sites/site/sims/sim
+    post:
+      operationId: postSitesSiteSimsSim
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_SitesSiteSimsSim'
+      responses:
+        "201":
+          description: created
+      summary: POST /sites/site/sims/sim
+    parameters:
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {site-id}
+        in: path
+        name: site-id
+        required: true
+      - content:
+          text/plain; charset=utf-8:
+            schema:
+              type: string
+        description: key {iccid}
+        in: path
+        name: iccid
+        required: true

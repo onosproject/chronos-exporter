@@ -37,7 +37,7 @@ func (d *Device) collect(period time.Duration, site string) {
 	go func() {
 		for {
 			randNum := rand.Intn(100)
-			if randNum  > 20 && randNum < 30 {
+			if randNum  > 20 && randNum < 24 {
 				mu.Lock()
 				counter++
 				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("%s: core event number-%d", sn, counter), site, sim, sn, time.Now().Format(time.RFC3339Nano)).
@@ -65,7 +65,7 @@ func (d *Device) collect(period time.Duration, site string) {
 	go func() {
 		for {
 			randNum := rand.Intn(100)
-			if randNum > 60 && randNum < 70 {
+			if randNum > 60 && randNum < 65 {
 				mu.Lock()
 				counter++
 				deviceConnectionEventFabric.WithLabelValues(fmt.Sprintf("%s: fabric event number-%d", sn, counter), site, sim, sn, time.Now().Format(time.RFC3339Nano)).

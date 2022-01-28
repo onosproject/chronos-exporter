@@ -15,8 +15,8 @@ var log = logging.GetLogger("main")
 
 func main() {
 	configPath := flag.String("config", "", "path to configuration file")
-	imagePath := flag.String("imagePath", "/opt/images/", "path to the images")
-	sitePlanPath := flag.String("sitePlanPath", "/opt/site-plans/", "path to the site plans")
+	imagePath := flag.String("imagePath", "/opt/", "path to the images")
+	sitePlanPath := flag.String("sitePlanPath", "/opt/", "path to the site plans")
 	ready := make(chan bool)
 	flag.Parse()
 
@@ -30,8 +30,9 @@ func main() {
 		log.Fatalf("Cannot start without a valid config %v", err)
 	}
 
-	mgr := manager.NewManager(configJSON, *imagePath, *sitePlanPath)
-	mgr.Run()
+	mgr := manager.NewManager(configJSON, *imagePath, *sitePlanPath,
+		[]string{"http://localhost:4200"})
+	mgr.Run(2112)
 
 	<-ready
 }

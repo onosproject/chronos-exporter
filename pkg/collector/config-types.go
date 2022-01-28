@@ -126,3 +126,63 @@ type SmallCell struct {
 	Position    *Position `json:"position,omitempty" yaml:"position,omitempty"`
 	SmallCellId string    `json:"small-cell-id" yaml:"small-cell-id"`
 }
+
+// RequestBodyApplicationsApplication defines model for RequestBody_ApplicationsApplication.
+type RequestBodyApplicationsApplication Application
+
+// RequestBodySitesSite defines model for RequestBody_SitesSite.
+type RequestBodySitesSite Site
+
+// RequestBodySitesSiteDeviceGroupsDeviceGroup defines model for RequestBody_SitesSiteDeviceGroupsDeviceGroup.
+type RequestBodySitesSiteDeviceGroupsDeviceGroup DeviceGroup
+
+// RequestBodySitesSiteDeviceGroupsDeviceGroupDevicesDevice defines model for RequestBody_SitesSiteDeviceGroupsDeviceGroupDevicesDevice.
+type RequestBodySitesSiteDeviceGroupsDeviceGroupDevicesDevice string
+
+// RequestBodySitesSiteDevicesDevice defines model for RequestBody_SitesSiteDevicesDevice.
+type RequestBodySitesSiteDevicesDevice Device
+
+// RequestBodySitesSiteSimsSim defines model for RequestBody_SitesSiteSimsSim.
+type RequestBodySitesSiteSimsSim Sim
+
+// RequestBodySitesSiteSlicesSlice defines model for RequestBody_SitesSiteSlicesSlice.
+type RequestBodySitesSiteSlicesSlice Slice
+
+// RequestBodySitesSiteSlicesSliceApplicationsApplication defines model for RequestBody_SitesSiteSlicesSliceApplicationsApplication.
+type RequestBodySitesSiteSlicesSliceApplicationsApplication string
+
+// RequestBodySitesSiteSlicesSliceDeviceGroupsDeviceGroup defines model for RequestBody_SitesSiteSlicesSliceDeviceGroupsDeviceGroup.
+type RequestBodySitesSiteSlicesSliceDeviceGroupsDeviceGroup string
+
+// RequestBodySitesSiteSmallCellsSmallCell defines model for RequestBody_SitesSiteSmallCellsSmallCell.
+type RequestBodySitesSiteSmallCellsSmallCell SmallCell
+
+// PostApplicationsApplicationJSONRequestBody defines body for PostApplicationsApplication for application/json ContentType.
+type PostApplicationsApplicationJSONRequestBody RequestBodyApplicationsApplication
+
+// PostSitesSiteJSONRequestBody defines body for PostSitesSite for application/json ContentType.
+type PostSitesSiteJSONRequestBody RequestBodySitesSite
+
+// PostSitesSiteDeviceGroupsDeviceGroupJSONRequestBody defines body for PostSitesSiteDeviceGroupsDeviceGroup for application/json ContentType.
+type PostSitesSiteDeviceGroupsDeviceGroupJSONRequestBody RequestBodySitesSiteDeviceGroupsDeviceGroup
+
+// PostSitesSiteDeviceGroupsDeviceGroupDevicesDeviceJSONRequestBody defines body for PostSitesSiteDeviceGroupsDeviceGroupDevicesDevice for application/json ContentType.
+type PostSitesSiteDeviceGroupsDeviceGroupDevicesDeviceJSONRequestBody RequestBodySitesSiteDeviceGroupsDeviceGroupDevicesDevice
+
+// PostSitesSiteDevicesDeviceJSONRequestBody defines body for PostSitesSiteDevicesDevice for application/json ContentType.
+type PostSitesSiteDevicesDeviceJSONRequestBody RequestBodySitesSiteDevicesDevice
+
+// PostSitesSiteSimsSimJSONRequestBody defines body for PostSitesSiteSimsSim for application/json ContentType.
+type PostSitesSiteSimsSimJSONRequestBody RequestBodySitesSiteSimsSim
+
+// PostSitesSiteSlicesSliceJSONRequestBody defines body for PostSitesSiteSlicesSlice for application/json ContentType.
+type PostSitesSiteSlicesSliceJSONRequestBody RequestBodySitesSiteSlicesSlice
+
+// PostSitesSiteSlicesSliceApplicationsApplicationJSONRequestBody defines body for PostSitesSiteSlicesSliceApplicationsApplication for application/json ContentType.
+type PostSitesSiteSlicesSliceApplicationsApplicationJSONRequestBody RequestBodySitesSiteSlicesSliceApplicationsApplication
+
+// PostSitesSiteSlicesSliceDeviceGroupsDeviceGroupJSONRequestBody defines body for PostSitesSiteSlicesSliceDeviceGroupsDeviceGroup for application/json ContentType.
+type PostSitesSiteSlicesSliceDeviceGroupsDeviceGroupJSONRequestBody RequestBodySitesSiteSlicesSliceDeviceGroupsDeviceGroup
+
+// PostSitesSiteSmallCellsSmallCellJSONRequestBody defines body for PostSitesSiteSmallCellsSmallCell for application/json ContentType.
+type PostSitesSiteSmallCellsSmallCellJSONRequestBody RequestBodySitesSiteSmallCellsSmallCell

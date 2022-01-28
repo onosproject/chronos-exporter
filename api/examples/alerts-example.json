@@ -1,0 +1,67 @@
+{
+ "alerts": [
+   {
+     "alert-id": "21e43108-8c6b-4c92-b80a-b1f365ae14ea",
+     "configpath": "/sites/site[site-id=fremont]/devices/device[serial-number=752365A]",
+     "message": "Device error - 123",
+     "raised-at": "2022-01-27T11:31:02Z",
+     "severity": "CRITICAL"
+   },
+   {
+     "alert-id": "57321f48-c0c8-4a0f-b2dd-fd98aa584bb4",
+     "configpath": "/sites/site[site-id=fremont]/devices/device[serial-number=7568111]",
+     "message": "Device error - 456",
+     "raised-at": "2022-01-27T11:20:02Z",
+     "severity": "CRITICAL"
+   },
+   {
+     "alert-id": "11b289ec-3773-4203-a2c4-79b20daae4bd",
+     "configpath": "/sites/site[site-id=fremont]/slices/slice[slice-id=fremont-slice-cameras]",
+     "message": "slice problem abc",
+     "raised-at": "2022-01-27T10:22:11Z",
+     "severity": "WARNING"
+   },
+   {
+     "alert-id": "76678889-3586-488f-810b-dbfa0709705d",
+     "configpath": "/sites/site[site-id=fremont]/small-cells/small-cell[small-cell-id=fremont-sc-east]",
+     "message": "Small cell temperature warning",
+     "raised-at": "2022-01-27T09:55:02Z",
+     "severity": "WARNING"
+   },
+   {
+     "alert-id": "ed0633d6-0df2-4548-8099-6bcf97e0b07a",
+     "configpath": "/sites/site[site-id=fremont]/devices/device[serial-number=7568114]",
+     "message": "Camera focus error - 123",
+     "raised-at": "2022-01-27T09:55:12Z",
+     "severity": "INFO"
+   },
+   {
+     "alert-id": "91eb5c78-61ee-437b-b09f-119124f374f9",
+     "configpath": "/sites/site[site-id=bengaluru]/devices/device[serial-number=9870002]",
+     "message": "Phone error - 123",
+     "raised-at": "2022-01-27T10:31:02Z",
+     "severity": "CRITICAL"
+   },
+   {
+     "alert-id": "c3a03710-dc01-42ed-a5cb-47bec37d11c5",
+     "configpath": "/sites/site[site-id=bengaluru]/devices/device[serial-number=80003XC]",
+     "message": "Drone battery low",
+     "raised-at": "2022-01-27T10:15:02Z",
+     "severity": "WARNING"
+   },
+   {
+     "alert-id": "508c8770-f012-401d-a1d3-b59fc943e8e3",
+     "configpath": "/sites/site[site-id=berlin]/small-cells/small-cell[small-cell-id=berlin-sc-north]",
+     "message": "Small cell on backup power drop",
+     "raised-at": "2022-01-27T10:42:02Z",
+     "severity": "CRITICAL"
+   },
+   {
+     "alert-id": "e693f045-3407-421a-80a6-0eaeb291483a",
+     "configpath": "/sites/site[site-id=berlin]/devices/device[serial-number=18876885]",
+     "message": "Camera error - 123",
+     "raised-at": "2022-01-27T09:55:02Z",
+     "severity": "WARNING"
+   }
+ ]
+}

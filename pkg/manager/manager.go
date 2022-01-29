@@ -6,21 +6,20 @@ package manager
 
 import (
 	"fmt"
-	"github.com/labstack/echo-contrib/prometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/onosproject/chronos-exporter/pkg/alerts"
 	"github.com/onosproject/chronos-exporter/pkg/collector"
 	"github.com/onosproject/onos-lib-go/pkg/logging"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var log = logging.GetLogger("manager")
 
 // Manager single point of entry for the topology system.
 type Manager struct {
-	ImagePath    string
-	SitePlanPath string
-	echoRouter   *echo.Echo
+	echoRouter  *echo.Echo
+	configModel *collector.AetherModel
 }
 
 func NewManager(configData []byte, imagePath, sitePlanPath string, allowCorsOrigins []string) *Manager {
@@ -30,8 +29,7 @@ func NewManager(configData []byte, imagePath, sitePlanPath string, allowCorsOrig
 	}
 	log.Infof("Config model loaded, with %d sites", len(modelConfig.Sites))
 	mgr := Manager{
-		ImagePath:    imagePath,
-		SitePlanPath: sitePlanPath,
+		configModel: modelConfig,
 	}
 
 	mgr.echoRouter = echo.New()
@@ -41,23 +39,20 @@ func NewManager(configData []byte, imagePath, sitePlanPath string, allowCorsOrig
 			AllowHeaders: []string{echo.HeaderAccessControlAllowOrigin, echo.HeaderContentType, echo.HeaderAuthorization},
 		}))
 	}
+
 	collector.RegisterHandlers(mgr.echoRouter, collector.NewServer(modelConfig))
 	alerts.RegisterHandlers(mgr.echoRouter, alerts.NewServer())
-	p := prometheus.NewPrometheus("echo", nil)
-	p.Use(mgr.echoRouter)
 
 	mgr.echoRouter.Use(middleware.Static(imagePath))
 	mgr.echoRouter.Use(middleware.Static(sitePlanPath))
 
-	// TODO - write a custome middleware for serving the rasa model with cache
-	//  as described here https://rasa.com/docs/rasa/model-storage/#how-to-configure-your-server
-	mgr.echoRouter.Use(middleware.Static("/opt"))
-
+	mgr.echoRouter.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 	return &mgr
 }
 
 func (mgr *Manager) Run(port uint) {
 	log.Infof("Starting Manager on port %d", port)
+	mgr.configModel.Collect()
 	mgr.echoRouter.Logger.Fatal(mgr.echoRouter.Start(fmt.Sprintf(":%d", port)))
 	log.Warn("Manager Stopping")
 }

@@ -20,13 +20,20 @@ var log = logging.GetLogger("manager")
 type Manager struct {
 	echoRouter  *echo.Echo
 	configModel *collector.AetherModel
+	alertModel  *alerts.AetherAlerts
 }
 
-func NewManager(configData []byte, imagePath, sitePlanPath string, allowCorsOrigins []string) *Manager {
+func NewManager(configData []byte, alertData []byte, imagePath, sitePlanPath string, allowCorsOrigins []string) *Manager {
 	modelConfig, err := collector.LoadModel(configData)
 	if err != nil {
 		log.Fatal("Error unmarshalling configuration", err)
 	}
+
+	modelAlert, err := alerts.LoadModel(alertData)
+	if err != nil {
+		log.Fatal("Error unmarshalling alerts", err)
+	}
+
 	log.Infof("Config model loaded, with %d sites", len(modelConfig.Sites))
 	mgr := Manager{
 		configModel: modelConfig,
@@ -41,7 +48,7 @@ func NewManager(configData []byte, imagePath, sitePlanPath string, allowCorsOrig
 	}
 
 	collector.RegisterHandlers(mgr.echoRouter, collector.NewServer(modelConfig))
-	alerts.RegisterHandlers(mgr.echoRouter, alerts.NewServer())
+	alerts.RegisterHandlers(mgr.echoRouter, alerts.NewServer(modelAlert))
 
 	mgr.echoRouter.Use(middleware.Static(imagePath))
 	mgr.echoRouter.Use(middleware.Static(sitePlanPath))

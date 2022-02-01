@@ -18,3 +18,5 @@ build/build-tools
 build/_output
 *coverage*.xml
 *report*.xml
+
+**/.DS_Store

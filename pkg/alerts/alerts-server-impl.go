@@ -48,8 +48,7 @@ func (s *ServerImpl) ClearAlert(ctx echo.Context, alertId string) error {
 
 	for index, al := range *s.alert {
 		if al.AlertId == alertId {
-			var timeNow time.Time
-			timeNow = time.Now()
+			timeNow := time.Now()
 			s1 := *s.alert
 			s1[index].ClearedAt = &timeNow
 			resp := &response{

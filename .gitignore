@@ -25,5 +25,5 @@ __pycache__
 .cache
 
 # Rasa Cache
-.rasa
+rasa-models/rasa/.rasa
 

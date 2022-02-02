@@ -24,6 +24,9 @@ __pycache__
 **/.DS_Store
 .cache
 
+# Rasa Models
+rasa-models/rasa/models
+
 # Rasa Cache
 rasa-models/rasa/.rasa
 

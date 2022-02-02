@@ -19,4 +19,11 @@ build/_output
 *coverage*.xml
 *report*.xml
 
+# Rasa  
+__pycache__
 **/.DS_Store
+.cache
+
+# Rasa Cache
+.rasa
+

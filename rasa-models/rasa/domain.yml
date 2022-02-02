@@ -1,0 +1,49 @@
+version: "3.0"
+
+intents:
+  - greet
+  - goodbye
+  - chitchat
+  - faq
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+
+responses:
+  utter_greet:
+    - text: "Hey! How are you?"
+
+  utter_did_that_help:
+    - text: "Did that help you?"
+
+  utter_happy:
+    - text: "Great, carry on!"
+
+  utter_goodbye:
+    - text: "Bye"
+
+  utter_chitchat/ask_name:
+    - text: Hello, my name is ONF Bot.
+    - text: I am called ONF Bot!
+
+  # ONF specific FAQ
+  utter_faq/enterprise:
+    - text: Enterprise forms the root of a customer-specific Enterprise hierarchy. The Enterprise model is referenced by many other objects, and allows those objects to be scoped to a particular Enterprise for ownership and role-based access control purposes.
+
+  utter_faq/application:
+    - text: Application specifies an application and the endpoints for the application. Applications are the termination point for traffic from the UPF.
+
+  utter_faq/vcs:
+    - text: Virtual Cellular Service (VCS) connects a Device-Group to an Application.
+
+  utter_faq/device_group:
+    - text: Device-Group allows multiple devices to be logically grouped together.
+
+  utter_faq/site:
+    - text: Enterprises are divided into Sites. A site is a point of presence for an Enterprise and may be either physical or logical (i.e. a single geographic location could in theory contain several logical sites).
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

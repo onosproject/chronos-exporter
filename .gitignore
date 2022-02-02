@@ -18,15 +18,3 @@ build/build-tools
 build/_output
 *coverage*.xml
 *report*.xml
-
-# Rasa  
-__pycache__
-**/.DS_Store
-.cache
-
-# Rasa Models
-rasa-models/rasa/models
-
-# Rasa Cache
-rasa-models/rasa/.rasa
-

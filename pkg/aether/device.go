@@ -1,0 +1,12 @@
+// SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
+//
+// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+
+package aether
+
+import "time"
+
+func (d *EnterprisesEnterpriseSiteDevice) collect(period time.Duration, site string) {
+	log.Infof("Starting collector for Device %s", d.DeviceId)
+
+}

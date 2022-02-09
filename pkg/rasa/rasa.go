@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2022-present Open Networking Foundation <info@opennetworking.org>
 //
-// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 package rasa
 
@@ -23,7 +23,7 @@ type Rasa struct {
 
 func NewRasa(modelPath string) *Rasa {
 	return &Rasa{
-		ModelPath:    modelPath,
+		ModelPath: modelPath,
 	}
 }
 
@@ -72,9 +72,9 @@ func (rs *Rasa) handleModel(c *gin.Context) {
 		////Check hash value for the model file
 		hashValue, err := getHashValue(modelPath)
 		if err != nil {
-				log.Error(err.Error())
-				c.Status(http.StatusInternalServerError)
-				return
+			log.Error(err.Error())
+			c.Status(http.StatusInternalServerError)
+			return
 		}
 
 		if ifNonMatchValue == hashValue {
@@ -93,7 +93,7 @@ func (rs *Rasa) handleModel(c *gin.Context) {
 	}
 }
 
-func getHashValue(modelPath string) (string, error){
+func getHashValue(modelPath string) (string, error) {
 	newHash := sha256.New()
 	byteData, err := ioutil.ReadFile(modelPath)
 	newHash.Write(byteData)

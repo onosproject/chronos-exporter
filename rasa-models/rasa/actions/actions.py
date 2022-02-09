@@ -2,7 +2,7 @@
 
 # SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 #
-# SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+# SPDX-License-Identifier: Apache-2.0
 
 # This files contains your custom actions which can be used to run
 # custom Python code.

@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 //
-// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 package collector
 
@@ -12,6 +12,7 @@ import (
 	"sync"
 	"time"
 )
+
 var counter int = 0
 
 func (d *Device) collect(period time.Duration, site string) {
@@ -30,21 +31,21 @@ func (d *Device) collect(period time.Duration, site string) {
 			} else {
 				deviceConnectedStatus.WithLabelValues("Active", site, sim, sn).Set(0)
 			}
-				time.Sleep(period * 3)
+			time.Sleep(period * 3)
 		}
 	}()
 
 	go func() {
 		for {
 			randNum := rand.Intn(100)
-			if randNum  > 20 && randNum < 24 {
+			if randNum > 20 && randNum < 24 {
 				mu.Lock()
 				counter++
 				deviceConnectionEventCore.WithLabelValues(fmt.Sprintf("%s: core event number-%d", sn, counter), site, sim, sn, time.Now().Format(time.RFC3339Nano)).
-					Set(float64(rand.Intn(5) +1 ))
+					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}
-			time.Sleep(time.Second * time.Duration(rand.Intn(60) +1))
+			time.Sleep(time.Second * time.Duration(rand.Intn(60)+1))
 		}
 	}()
 
@@ -58,7 +59,7 @@ func (d *Device) collect(period time.Duration, site string) {
 					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}
-			time.Sleep(time.Second * time.Duration(rand.Intn(60) + 1))
+			time.Sleep(time.Second * time.Duration(rand.Intn(60)+1))
 		}
 	}()
 
@@ -72,7 +73,7 @@ func (d *Device) collect(period time.Duration, site string) {
 					Set(float64(rand.Intn(5) + 1))
 				mu.Unlock()
 			}
-			time.Sleep(time.Second * time.Duration(rand.Intn(60) + 1))
+			time.Sleep(time.Second * time.Duration(rand.Intn(60)+1))
 		}
 	}()
 }

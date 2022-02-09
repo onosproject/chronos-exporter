@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 //
-// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 package collector
 
@@ -18,9 +18,9 @@ func (s *Slice) collect(period time.Duration, site string) {
 		minThroughput := 100000
 		maxThroughput := 1000000
 		for {
-			throughput := float64(rand.Intn(maxThroughput - minThroughput) + minThroughput)
+			throughput := float64(rand.Intn(maxThroughput-minThroughput) + minThroughput)
 			sliceThroughputBytes.WithLabelValues(sliceId, site).Set(throughput)
-			time.Sleep(period/10)
+			time.Sleep(period / 10)
 		}
 	}()
 
@@ -28,9 +28,9 @@ func (s *Slice) collect(period time.Duration, site string) {
 		minPacket := 100
 		maxPacket := 800
 		for {
-			packets := float64(rand.Intn(maxPacket - minPacket) + minPacket)
+			packets := float64(rand.Intn(maxPacket-minPacket) + minPacket)
 			sliceThroughputPackets.WithLabelValues(sliceId, site).Set(packets)
-			time.Sleep(period/10)
+			time.Sleep(period / 10)
 		}
 	}()
 
@@ -38,14 +38,14 @@ func (s *Slice) collect(period time.Duration, site string) {
 		minLatency := 15
 		maxLatency := 25
 		for {
-			latency := float64(rand.Intn(maxLatency - minLatency) + minLatency)
+			latency := float64(rand.Intn(maxLatency-minLatency) + minLatency)
 			randomNumber := rand.Intn(100)
 			if randomNumber != 17 {
 				sliceLatencyEndToEnd.WithLabelValues(sliceId, site).Set(latency)
-				time.Sleep(period/10)
+				time.Sleep(period / 10)
 			} else {
 				sliceLatencyEndToEnd.WithLabelValues(sliceId, site).Set(100)
-				time.Sleep(period/10)
+				time.Sleep(period / 10)
 			}
 		}
 	}()
@@ -59,9 +59,9 @@ func (s *Slice) collectPerDevicePerApplication(period time.Duration, site string
 			minThroughput := 100000
 			maxThroughput := 1000000
 			for {
-				throughput := float64(rand.Intn(maxThroughput - minThroughput) + minThroughput)
+				throughput := float64(rand.Intn(maxThroughput-minThroughput) + minThroughput)
 				perDevicePerApplicationThroughputBytes.WithLabelValues(site, slice, app, serialNumber).Set(throughput)
-				time.Sleep(period/10)
+				time.Sleep(period / 10)
 			}
 		}()
 
@@ -69,9 +69,9 @@ func (s *Slice) collectPerDevicePerApplication(period time.Duration, site string
 			minPacket := 100
 			maxPacket := 800
 			for {
-				throughput := float64(rand.Intn(maxPacket - minPacket) + minPacket)
+				throughput := float64(rand.Intn(maxPacket-minPacket) + minPacket)
 				perDevicePerApplicationThroughputPacket.WithLabelValues(site, slice, app, serialNumber).Set(throughput)
-				time.Sleep(period/10)
+				time.Sleep(period / 10)
 			}
 		}()
 
@@ -79,9 +79,9 @@ func (s *Slice) collectPerDevicePerApplication(period time.Duration, site string
 			minPacket := 1
 			maxPacket := 8
 			for {
-				throughput := float64(rand.Intn(maxPacket - minPacket) + minPacket)
+				throughput := float64(rand.Intn(maxPacket-minPacket) + minPacket)
 				perDevicePerApplicationLossPacket.WithLabelValues(site, slice, app, serialNumber).Set(throughput)
-				time.Sleep(period/10)
+				time.Sleep(period / 10)
 			}
 		}()
 	}

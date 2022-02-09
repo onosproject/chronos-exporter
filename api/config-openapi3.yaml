@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 #
-# SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+# SPDX-License-Identifier: Apache-2.0
 components:
   requestBodies:
     RequestBody_ApplicationsApplication:
@@ -348,7 +348,7 @@ info:
     url: https://opennetworking.org
   description: Chronos configuration API for Aether Enterprise Portal
   license:
-    name: LicenseRef-ONF-Member-Only-1.0
+    name: Apache-2.0
     url: https://opennetworking.org/wp-content/uploads/2020/06/ONF-Member-Only-Software-License-v1.0.pdf
   termsOfService: https://opennetworking.org/wp-content/uploads/2019/02/ONF-Licensing-and-IPR-FAQ-2020-06.pdf
   title: Chronos Config API

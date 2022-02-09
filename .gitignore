@@ -30,4 +30,6 @@ rasa-models/rasa/models
 
 # Rasa Cache
 rasa-models/rasa/.rasa
+rasa-models/rasa/.config
+rasa-models/rasa/.keras
 

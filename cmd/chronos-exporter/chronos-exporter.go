@@ -49,7 +49,7 @@ func main() {
 	}
 
 	mgr := manager.NewManager(configJSON, aetherJSON, alertJSON, *imagePath, *sitePlanPath,
-		[]string{"http://localhost:4200"})
+		[]string{"http://localhost:4200", "http://aether-in-a-box:31195"})
 	mgr.Run(2112)
 
 	<-ready

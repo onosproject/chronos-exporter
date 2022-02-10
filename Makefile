@@ -22,7 +22,7 @@ build-tools:=$(shell if [ ! -d "./build/build-tools" ]; then cd build && git clo
 include ./build/build-tools/make/onf-common.mk
 
 images: # @HELP build simulators image
-images: chronos-exporter-docker
+images: chronos-exporter-docker rasa-model-server-docker
 
 .PHONY: local-chronos-exporter
 local-chronos-exporter:
@@ -89,9 +89,12 @@ jenkins-test: build deps license_check_apache linters
 	TEST_PACKAGES=github.com/onosproject/chronos-exporter/... ./build/build-tools/build/jenkins/make-unit
 
 chronos-exporter-docker: local-chronos-exporter
-	docker build . -f Dockerfile \
-	--build-arg LOCAL_AETHER_MODELS=${LOCAL_CHRONOS_EXPORTER} \
+	docker build . -f build/chronos-exporter/Dockerfile \
 	-t ${DOCKER_REPOSITORY}chronos-exporter:${ONOS_CHRONOS_EXPORTER_VERSION}
+
+rasa-model-server-docker:
+	docker build . -f build/rasa-model-server/Dockerfile \
+	-t ${DOCKER_REPOSITORY}rasa-model-server:${ONOS_CHRONOS_EXPORTER_VERSION}
 
 kind: # @HELP build Docker images and add them to the currently configured kind cluster
 kind: images kind-only
@@ -113,4 +116,7 @@ clean:: # @HELP remove all the build artifacts
 	rm -rf ./build/_output
 	rm -rf ./vendor
 	rm -rf ./cmd/chronos-exporter/chronos-exporter
-
+	rm -rf ./rasa-models/rasa/models
+	rm -rf ./rasa-models/rasa/.rasa
+	rm -rf ./rasa-models/rasa/.config
+	rm -rf ./rasa-models/rasa/.keras

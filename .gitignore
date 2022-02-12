@@ -32,4 +32,5 @@ rasa-models/rasa/models
 rasa-models/rasa/.rasa
 rasa-models/rasa/.config
 rasa-models/rasa/.keras
+rasa-models/rasa/.bash_history
 

@@ -7,7 +7,7 @@ package aether
 func (e *EnterprisesEnterprise) collect() {
 
 	for _, site := range *e.Site {
-		site.collect()
+		site.collect(e.EnterpriseId)
 	}
 
 }

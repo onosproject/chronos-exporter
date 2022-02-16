@@ -13,10 +13,8 @@ nlu:
       - hello there
       - good morning
       - good evening
-      - moin
       - hey there
       - let's go
-      - hey dude
       - goodmorning
       - goodevening
       - good afternoon
@@ -101,13 +99,6 @@ nlu:
       - What do people call you?
       - Do you have a name for yourself?
 
-  - intent: chitchat/ask_weather
-    examples: |
-      - What's the weather like today?
-      - Does it look sunny outside today?
-      - Oh, do you mind checking the weather for me please?
-      - I like sunny days in Berlin.
-
   # ONF specific FAQ
   - intent: faq/enterprise
     examples: |
@@ -123,13 +114,11 @@ nlu:
       - application meaning
       - what is the termination endpoint for traffic from the UPF?
 
-  - intent: faq/vcs
+  - intent: faq/slice
     examples: |
-      - what is virtual cellular service?
-      - what is VCS?
-      - virtual cellular service meaning
-      - VCS meaning
-      - VCS full form
+      - what is slice?
+      - slice meaning
+      - explain slice
 
   - intent: faq/device_group
     examples: |
@@ -143,3 +132,27 @@ nlu:
       - what are enterprises divided into?
       - site meaning
       - what does site mean?
+
+  # Ticket
+  - intent: create_ticket
+    examples: |
+      - I need to create a ticket
+      - create ticket
+      - Send a ticket to support
+      - Contact support
+      - Please create a ticket
+      - I want to create a ticket
+      - Start a ticket
+      - Make a ticket
+
+  - intent: inform_email
+    examples: |
+      - My email is [example@opennetworking.org](email)
+      - My email is [random@gmail.com](email)
+      - Email is [something@example.com](email)
+      - Email is [person@gmail.com](email)
+      - [random@example.com](email)
+      - [person@gmail.com](email)
+      - [johndoe@hotmail.com](email)
+      - Please send it to [anything@example.com](email)
+

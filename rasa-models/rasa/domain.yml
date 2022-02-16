@@ -14,10 +14,30 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - create_ticket
+  - inform_email
+
+entities:
+  - email
+
+forms:
+  ticket_form:
+    required_slots:
+        - email
+
+slots:
+  email:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: email
+        conditions:
+        - active_loop: ticket_form
 
 responses:
   utter_greet:
-    - text: "Hey! How are you?"
+    - text: "Hi, I am the ONF bot. How can I help you today?"
 
   utter_did_that_help:
     - text: "Did that help you?"
@@ -39,14 +59,22 @@ responses:
   utter_faq/application:
     - text: Application specifies an application and the endpoints for the application. Applications are the termination point for traffic from the UPF.
 
-  utter_faq/vcs:
-    - text: Virtual Cellular Service (VCS) connects a Device-Group to an Application.
+  utter_faq/slice:
+    - text: Slice connects a Device-Group to an Application.
 
   utter_faq/device_group:
     - text: Device-Group allows multiple devices to be logically grouped together.
 
   utter_faq/site:
     - text: Enterprises are divided into Sites. A site is a point of presence for an Enterprise and may be either physical or logical (i.e. a single geographic location could in theory contain several logical sites).
+
+  # Ticket 
+  utter_ticket_complete:
+    - text: Thank you! Your ticket has been created and a copy has been sent to {email}.
+
+  utter_ask_email:
+    - text: I can help you create a ticket. Can I have your email address?
+
 
 session_config:
   session_expiration_time: 60

@@ -19,3 +19,19 @@ rules:
     steps:
       - intent: chitchat
       - action: utter_chitchat
+
+  - rule: activate ticket form
+    steps:
+      - intent: create_ticket
+      - action: ticket_form
+      - active_loop: ticket_form
+
+  - rule: submit ticket form
+    condition:
+      - active_loop: ticket_form
+    steps:
+      - action: ticket_form
+      - active_loop: null
+      - slot_was_set:
+        - requested_slot: null
+      - action: utter_ticket_complete

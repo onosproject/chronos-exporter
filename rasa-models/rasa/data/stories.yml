@@ -10,4 +10,10 @@ stories:
       - intent: greet
       - action: utter_greet
 
+  - story: device alert questions
+    steps:
+      - intent: device_alert
+      - action: utter_device_alert
+      - intent: alert_questions
+      - action: utter_alert_questions
 

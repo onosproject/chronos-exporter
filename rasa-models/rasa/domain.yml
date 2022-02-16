@@ -15,10 +15,19 @@ intents:
   - mood_unhappy
   - bot_challenge
   - create_ticket
+  - get_email
+  - subscribe
   - inform_email
+  - inform_frequency
+  - device_alert
+  - alert_questions
 
 entities:
   - email
+  - alert_type
+  - device_id
+  - severity
+  - time
 
 forms:
   ticket_form:
@@ -75,6 +84,24 @@ responses:
   utter_ask_email:
     - text: I can help you create a ticket. Can I have your email address?
 
+  # Device Alerts
+  utter_device_alert:
+    - text: I see you have a {severity} {alert_type}. How can I help you?
+
+  utter_alert_questions/device_connected:
+    - text: Please check the Device+SIM status page.
+
+  utter_alert_questions/device_connected_time:
+    - text: Please check the Device+SIM status page.
+
+  utter_alert_questions/other_alerts:
+    - text: Please check the alerts page and filter by device. 
+
+  utter_alert_questions/small_cell:
+    - text: Please check the Small Cells page and look at the list of devices. 
+
+  utter_alert_questions/slice:
+    - text: Please check the Slices page and look at the Device group for the device. 
 
 session_config:
   session_expiration_time: 60

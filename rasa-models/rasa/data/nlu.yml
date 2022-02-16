@@ -132,7 +132,7 @@ nlu:
       - what are enterprises divided into?
       - site meaning
       - what does site mean?
-
+  
   # Ticket
   - intent: create_ticket
     examples: |
@@ -156,3 +156,55 @@ nlu:
       - [johndoe@hotmail.com](email)
       - Please send it to [anything@example.com](email)
 
+  # Device Alerts
+  - intent: device_alert
+    examples: |
+      - [Device Alert](alert_type) [232](device_id) [Critical](severity) [11:23](time)
+      - [Device Alert](alert_type) [895](device_id) [High](severity) [17:53](time)
+      - [Device Alert](alert_type) [584](device_id) [Low](severity) [06:59](time)
+      - [Device Alert](alert_type) [100](device_id) [Critical](severity) [00:00](time)
+      - [Device Alert](alert_type) [438](device_id) [High](severity) [12:12](time)
+      - [Device Alert](alert_type) [726](device_id) [Low](severity) [01:45](time)
+
+  # - intent: ask_question
+  #   examples: |
+  #     - Ask a question
+  #     - I have a question
+  #     - Question about the device alert
+  #     - Ask a question about device alert
+
+  - intent: alert_questions/device_connected
+    examples: |
+      - is my device connected?
+      - can you tell me if my device is connected?
+      - device connectivity status
+      - device connection
+      - is my device disconnected?
+
+  - intent: alert_questions/device_connected_time
+    examples: |
+      - when was my device last connected?
+      - for how long has the device been disconnected?
+      - how can i check when my device was connected
+      - can you tell me when my device was connected 
+  
+  - intent: alert_questions/other_alerts
+    examples: |
+      - are there any alerts 
+      - are there any other alerts for this device. 
+      - what more alerts are there
+      - see all alerts for device
+
+  - intent: alert_questions/small_cell
+    examples: |
+      - what small cell is this device connected to
+      - is this device connected to a small cell
+      - what small cell is connected to my device
+      - see what small cell the device is connected to
+
+  - intent: alert_questions/slice
+    examples: |
+      - what slices is this device in 
+      - is this device in a slice
+      - my device is in which slice
+      - see what slice the device is connected to

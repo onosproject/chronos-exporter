@@ -379,14 +379,16 @@ func (w *ServerImpl) GetEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Con
 				if app.ApplicationId == applicationId {
 					for _, ept := range *app.Endpoint {
 						if ept.EndpointId == endpointId {
-							return ctx.JSON(http.StatusOK, ept.Mbr)
+							if ept.Mbr != nil {
+								return ctx.JSON(http.StatusOK, ept.Mbr)
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-	return echo.NewHTTPError(http.StatusNotImplemented)
+	return echo.NewHTTPError(http.StatusNotFound)
 }
 
 // POST /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr
@@ -857,6 +859,10 @@ func (w *ServerImpl) DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Cont
 		st1 := *e1[entIndex].Site
 		dg1 := *st1[siteIndex].DeviceGroup
 
+		if dg1[dgIndex].Mbr == nil {
+			return ctx.String(http.StatusBadRequest, "Mbr is not present")
+		}
+
 		dg1[dgIndex].Mbr = nil
 		return ctx.String(http.StatusOK, "Mbr delete from Device Group with Id: "+deviceGroupId)
 	}
@@ -872,14 +878,16 @@ func (w *ServerImpl) GetEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context
 				if st.SiteId == siteId {
 					for _, dg := range *st.DeviceGroup {
 						if dg.DeviceGroupId == deviceGroupId {
-							return ctx.JSON(http.StatusOK, dg.Mbr)
+							if dg.Mbr != nil {
+								return ctx.JSON(http.StatusOK, dg.Mbr)
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-	return echo.NewHTTPError(http.StatusNotImplemented)
+	return echo.NewHTTPError(http.StatusNotFound)
 }
 
 // POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr
@@ -1890,7 +1898,9 @@ func (w *ServerImpl) GetEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context, targ
 				if st.SiteId == siteId {
 					for _, slice := range *st.Slice {
 						if slice.SliceId == sliceId {
-							return ctx.JSON(http.StatusOK, slice.Mbr)
+							if slice.Mbr != nil {
+								return ctx.JSON(http.StatusOK, slice.Mbr)
+							}
 						}
 					}
 				}
@@ -2390,7 +2400,9 @@ func (w *ServerImpl) GetEnterprisesEnterpriseTemplateMbr(ctx echo.Context, targe
 		if e.EnterpriseId == enterpriseId {
 			for _, tem := range *e.Template {
 				if tem.TemplateId == templateId {
-					return ctx.JSON(http.StatusOK, tem.Mbr)
+					if tem.Mbr != nil {
+						return ctx.JSON(http.StatusOK, tem.Mbr)
+					}
 				}
 			}
 		}

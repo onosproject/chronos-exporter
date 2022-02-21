@@ -27,12 +27,12 @@ func (d *EnterprisesEnterpriseSiteDevice) collect(entId string, siteId string) {
 	go func() {
 		for {
 			count := float64(rand.Intn(100))
-			if count != 5 {
+			if count > 5 && count < 20 {
 				deviceConnectedStatus.WithLabelValues("Active", entId, siteId, devId, imei, simCard).Set(1)
 			} else {
 				deviceConnectedStatus.WithLabelValues("Active", entId, siteId, devId, imei, simCard).Set(0)
 			}
-			time.Sleep(time.Second * 5)
+			time.Sleep(time.Second * (time.Duration(rand.Intn(60) + 60)))
 		}
 	}()
 

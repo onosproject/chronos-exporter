@@ -26,13 +26,8 @@ func (d *EnterprisesEnterpriseSiteDevice) collect(entId string, siteId string) {
 	imei := fmt.Sprintf("%d", d.Imei)
 	go func() {
 		for {
-			count := float64(rand.Intn(100))
-			if count != 5 {
-				deviceConnectedStatus.WithLabelValues("Active", entId, siteId, devId, imei, simCard).Set(1)
-			} else {
-				deviceConnectedStatus.WithLabelValues("Active", entId, siteId, devId, imei, simCard).Set(0)
-			}
-			time.Sleep(time.Second * 5)
+			deviceConnectedStatus.WithLabelValues("Active", entId, siteId, devId, imei, simCard).Set(float64(rand.Intn(2)))
+			time.Sleep(time.Second * time.Duration(3600))
 		}
 	}()
 

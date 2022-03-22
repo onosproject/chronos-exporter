@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: Apache-2.0
+models:
+  url: http://docker-compose_rasa-ms:8080/models/20220101-000000-aether-trained
+  wait_time_between_pulls: 100   # In seconds, optional, default: 100

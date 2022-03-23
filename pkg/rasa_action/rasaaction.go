@@ -1,11 +1,10 @@
 // SPDX-FileCopyrightText: 2022-present Open Networking Foundation <info@opennetworking.org>
 //
-// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 package rasa_action
 
 import (
-	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-gomail/gomail"
@@ -16,12 +15,16 @@ import (
 var log = logging.GetLogger("rasa_action")
 
 type RasaAction struct {
-	SmtpServer string
+	SmtpServer   string
+	SmtpServPort int
+	Port         string
 }
 
-func NewRasaAction() *RasaAction {
+func NewRasaAction(smtpServ string, smtpSerPort int, port string) *RasaAction {
 	return &RasaAction{
-		SmtpServer: "example.com",
+		SmtpServer:   smtpServ,
+		SmtpServPort: smtpSerPort,
+		Port:         port,
 	}
 }
 
@@ -41,27 +44,27 @@ func (ra *RasaAction) Run() {
 
 	router.POST("/webhook", ra.handleAction)
 
-	err := router.Run("0.0.0.0:" + "8081")
+	err := router.Run("0.0.0.0:" + ra.Port)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func (rs *RasaAction) handleAction(c *gin.Context) {
+func (ra *RasaAction) handleAction(c *gin.Context) {
 	switch c.Request.Method {
 	case "POST":
 		var data payload
 		err := c.BindJSON(&data)
 		if err != nil {
-			fmt.Println("Error in json:",err.Error() )
+			log.Error(err.Error())
 		}
 		if data.NextAction == "email" {
-			err := sendMail()
+			err := ra.sendMail()
 			if err != nil {
 				log.Infof(err.Error())
 				c.JSON(http.StatusInternalServerError, gin.H{
 					"action_name": "email",
-						"error": err.Error(),
+					"error":       err.Error(),
 				})
 				c.Status(http.StatusInternalServerError)
 				return
@@ -78,7 +81,7 @@ func (rs *RasaAction) handleAction(c *gin.Context) {
 	}
 }
 
-func sendMail() error {
+func (ra *RasaAction) sendMail() error {
 	//TODO:Need to get the details dynamically
 	m := gomail.NewMessage()
 	m.SetHeader("From", "aliase@gmail.com")
@@ -88,7 +91,7 @@ func sendMail() error {
 	m.SetBody("text", "Hello B and C")
 
 	//TODO:Need to check for email userid and password and how we can use here
-	d := gomail.NewDialer("smtp.gmail.com", 587, "user", "123456")
+	d := gomail.NewDialer(ra.SmtpServer, ra.SmtpServPort, "user", "123456")
 
 	if err := d.DialAndSend(m); err != nil {
 		return err

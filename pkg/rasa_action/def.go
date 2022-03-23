@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2022-present Open Networking Foundation <info@opennetworking.org>
 //
-// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 package rasa_action
 
@@ -26,10 +26,10 @@ type intent_ranking struct {
 	Name       string  `json:"name"`
 }
 type latest_message struct {
-	Entities []entities `json:"entities"`
-	Intent intent `json:"intent"`
+	Entities      []entities       `json:"entities"`
+	Intent        intent           `json:"intent"`
 	IntentRanking []intent_ranking `json:"intent_ranking"`
-	Text string `json:"text"`
+	Text          string           `json:"text"`
 }
 
 type events struct {
@@ -47,17 +47,17 @@ type active_loop struct {
 }
 
 type tracker struct {
-	ConversationID string `json:"conversation_id"`
-	Slots slots `json:"slots"`
-	LatestMessage latest_message `json:"latest_message"`
-	LatestEventTime float64 `json:"latest_event_time"`
-	FollowupAction  string  `json:"followup_action"`
-	Paused          bool    `json:"paused"`
-	Events []events `json:"events"`
-	LatestInputChannel string `json:"latest_input_channel"`
-	LatestActionName   string `json:"latest_action_name"`
-	LatestAction latest_action `json:"latest_action"`
-	ActiveLoop active_loop `json:"active_loop"`
+	ConversationID     string         `json:"conversation_id"`
+	Slots              slots          `json:"slots"`
+	LatestMessage      latest_message `json:"latest_message"`
+	LatestEventTime    float64        `json:"latest_event_time"`
+	FollowupAction     string         `json:"followup_action"`
+	Paused             bool           `json:"paused"`
+	Events             []events       `json:"events"`
+	LatestInputChannel string         `json:"latest_input_channel"`
+	LatestActionName   string         `json:"latest_action_name"`
+	LatestAction       latest_action  `json:"latest_action"`
+	ActiveLoop         active_loop    `json:"active_loop"`
 }
 
 type config struct {
@@ -78,9 +78,9 @@ type intents struct {
 }
 
 type domain struct {
-	Config config `json:"config"`
-	Intents []intents `json:"intents"`
-	Entities []string `json:"entities"`
+	Config   config    `json:"config"`
+	Intents  []intents `json:"intents"`
+	Entities []string  `json:"entities"`
 	Slots    struct {
 		Property1 struct {
 			AutoFill     bool     `json:"auto_fill"`
@@ -107,14 +107,14 @@ type domain struct {
 }
 
 type payload struct {
-	NextAction string `json:"next_action"`
-	SenderID   string `json:"sender_id"`
-	Tracker tracker `json:"tracker"`
-	Domain domain `json:"domain"`
+	NextAction string  `json:"next_action"`
+	SenderID   string  `json:"sender_id"`
+	Tracker    tracker `json:"tracker"`
+	Domain     domain  `json:"domain"`
 }
 
 type response struct {
-	Events []events `json:"events"`
+	Events    []events `json:"events"`
 	Responses []struct {
 		Text    string `json:"text"`
 		Buttons []struct {

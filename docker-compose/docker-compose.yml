@@ -36,3 +36,10 @@ services:
     container_name: docker-compose_rasa-ms
     command:
       - /usr/local/bin/rasa-model-server
+  rasa-as:
+    build:
+      context: ..
+      dockerfile: build/rasa-action-server/Dockerfile
+    container_name: docker-compose_rasa-as
+    command:
+      - /usr/local/bin/rasa-action-server

@@ -56,7 +56,9 @@ func (ra *RasaAction) handleAction(c *gin.Context) {
 		var data payload
 		err := c.BindJSON(&data)
 		if err != nil {
-			log.Error(err.Error())
+			log.Error(err)
+			c.Status(http.StatusInternalServerError)
+			return
 		}
 		if data.NextAction == "email" {
 			err := ra.sendMail()
@@ -73,9 +75,8 @@ func (ra *RasaAction) handleAction(c *gin.Context) {
 				Events:    nil,
 				Responses: nil,
 			})
-
 		}
-
+		c.Status(http.StatusBadRequest)
 	default:
 		c.Status(http.StatusNotImplemented)
 	}

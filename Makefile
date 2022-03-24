@@ -22,7 +22,7 @@ build-tools:=$(shell if [ ! -d "./build/build-tools" ]; then cd build && git clo
 include ./build/build-tools/make/onf-common.mk
 
 images: # @HELP build simulators image
-images: chronos-exporter-docker rasa-model-server-docker
+images: chronos-exporter-docker rasa-model-server-docker rasa-action-server-docker
 
 .PHONY: local-chronos-exporter
 local-chronos-exporter:
@@ -95,6 +95,10 @@ chronos-exporter-docker: local-chronos-exporter
 rasa-model-server-docker:
 	docker build . -f build/rasa-model-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-model-server:${ONOS_CHRONOS_EXPORTER_VERSION}
+
+rasa-action-server-docker:
+	docker build . -f build/rasa-action-server/Dockerfile \
+	-t ${DOCKER_REPOSITORY}rasa-action-server:${ONOS_CHRONOS_EXPORTER_VERSION}
 
 kind: # @HELP build Docker images and add them to the currently configured kind cluster
 kind: images kind-only

@@ -40,6 +40,14 @@ services:
     build:
       context: ..
       dockerfile: build/rasa-action-server/Dockerfile
+    ports:
+      - "8081:8081"
     container_name: docker-compose_rasa-as
     command:
       - /usr/local/bin/rasa-action-server
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: docker-compose_mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"

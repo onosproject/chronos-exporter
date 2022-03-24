@@ -13,14 +13,16 @@ import (
 var log = logging.GetLogger("main")
 
 func main() {
-	smtpServer := flag.String("smtpServer", "smtp.gmail.com", "smtp server url")
-	smtpServerPort := flag.Int("smtpSerPort", 587, "smtp server port")
+	smtpServer := flag.String("smtpServer", "docker-compose_mailhog", "smtp server url")
+	smtpServerPort := flag.Int("smtpSerPort", 1025, "smtp server port")
 	port := flag.String("port", "8081", "rasa action server port")
+	smtpUser := flag.String("smtpUser", "", "smtp user")
+	smtpUserPass := flag.String("smtpUserPass", "", "smtp user password")
 	ready := make(chan bool)
 	flag.Parse()
 
 	log.Infof("Starting Rasa Action Server")
-	rs := rasa_action.NewRasaAction(*smtpServer, *smtpServerPort, *port)
+	rs := rasa_action.NewRasaAction(*smtpServer, *smtpServerPort, *port, *smtpUser, *smtpUserPass)
 	rs.Run()
 
 	<-ready

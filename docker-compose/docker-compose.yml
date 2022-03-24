@@ -33,8 +33,6 @@ services:
     build:
       context: ..
       dockerfile: build/rasa-model-server/Dockerfile
-    ports:
-      - "8081:8081"
     container_name: docker-compose_rasa-ms
     command:
       - /usr/local/bin/rasa-model-server
@@ -42,6 +40,8 @@ services:
     build:
       context: ..
       dockerfile: build/rasa-action-server/Dockerfile
+    ports:
+      - "8081:8081"
     container_name: docker-compose_rasa-as
     command:
       - /usr/local/bin/rasa-action-server

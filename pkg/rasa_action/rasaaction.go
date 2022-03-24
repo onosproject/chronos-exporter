@@ -92,10 +92,9 @@ func (ra *RasaAction) sendMail() error {
 	m.SetHeader("From", "aliase@gmail.com")
 	m.SetHeader("To", "b@gmail.com", "c@gmail.com")
 	m.SetAddressHeader("Cc", "d@example.com", "D")
-	m.SetHeader("Subject", "Hello!")
-	m.SetBody("text", "Hello B and C")
+	m.SetHeader("Subject", "Test Mail")
+	m.SetBody("text", "Hello, Mail from Rasa Action Server")
 
-	//TODO:Need to check for email userid and password and how we can use here
 	d := gomail.NewDialer(ra.SmtpServer, ra.SmtpServPort, ra.SmtpUser, ra.SmtpUserPass)
 
 	if err := d.DialAndSend(m); err != nil {

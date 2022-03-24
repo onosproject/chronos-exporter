@@ -18,13 +18,17 @@ type RasaAction struct {
 	SmtpServer   string
 	SmtpServPort int
 	Port         string
+	SmtpUser     string
+	SmtpUserPass string
 }
 
-func NewRasaAction(smtpServ string, smtpSerPort int, port string) *RasaAction {
+func NewRasaAction(smtpServ string, smtpSerPort int, port string, user string, pass string) *RasaAction {
 	return &RasaAction{
 		SmtpServer:   smtpServ,
 		SmtpServPort: smtpSerPort,
 		Port:         port,
+		SmtpUser:     user,
+		SmtpUserPass: pass,
 	}
 }
 
@@ -92,7 +96,7 @@ func (ra *RasaAction) sendMail() error {
 	m.SetBody("text", "Hello B and C")
 
 	//TODO:Need to check for email userid and password and how we can use here
-	d := gomail.NewDialer(ra.SmtpServer, ra.SmtpServPort, "user", "123456")
+	d := gomail.NewDialer(ra.SmtpServer, ra.SmtpServPort, ra.SmtpUser, ra.SmtpUserPass)
 
 	if err := d.DialAndSend(m); err != nil {
 		return err

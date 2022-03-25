@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2020-present Open Networking Foundation <info@opennetworking.org>
+
+SPDX-License-Identifier: Apache-2.0
+-->
 # RASA Web Chat demonstrator
 
 This `docker-compose` distribution allows running the RASA

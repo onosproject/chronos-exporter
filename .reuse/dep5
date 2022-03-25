@@ -1,5 +1,8 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 
-Files: VERSION .gitreview go.mod go.sum *.json */mocks/*.go
+Files: VERSION .gitreview go.mod go.sum *.json */mocks/*.go \\
+    pkg/aether/config-server.go pkg/aether/config-types.go \\
+    pkg/alerts/alerts-server.go pkg/alerts/alerts-types.go \\
+    pkg/collector/config-server.go pkg/collector/config-types.go
 Copyright: 2021 Open Networking Foundation
 License: Apache-2.0

@@ -22,7 +22,7 @@ build-tools:=$(shell if [ ! -d "./build/build-tools" ]; then cd build && git clo
 include ./build/build-tools/make/onf-common.mk
 
 images: # @HELP build simulators image
-images: chronos-exporter-docker rasa-model-server-docker rasa-action-server-docker
+images: chronos-exporter-docker rasa-model-server-docker rasa-action-server-docker rasa-sanic-docker
 
 .PHONY: local-chronos-exporter
 local-chronos-exporter:
@@ -52,7 +52,7 @@ oapi-codegen-config: oapi-codegen
 	oapi-codegen \
 		-generate types -package collector \
 		-o pkg/collector/config-types.go api/config-openapi3.yaml
-	sed -i -E 's/json\:"(.+)"/json:"\1"\ yaml\:"\1"/g' pkg/collector/config-*.go
+	sed -i -E 's/json\:"(.+)"/json:"\1"\ yaml\:"\1"/g' pkg/collector/config-types.go
 	oapi-codegen \
 		-generate server -package collector \
 		-o pkg/collector/config-server.go api/config-openapi3.yaml
@@ -99,6 +99,10 @@ rasa-model-server-docker:
 rasa-action-server-docker:
 	docker build . -f build/rasa-action-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-action-server:${ONOS_CHRONOS_EXPORTER_VERSION}
+
+rasa-sanic-docker:
+	docker build . -f build/rasa-sanic/Dockerfile \
+	-t ${DOCKER_REPOSITORY}rasa-sanic:${ONOS_CHRONOS_EXPORTER_VERSION}
 
 kind: # @HELP build Docker images and add them to the currently configured kind cluster
 kind: images kind-only

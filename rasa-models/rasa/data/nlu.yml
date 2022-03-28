@@ -159,12 +159,12 @@ nlu:
   # Device Alerts
   - intent: device_alert
     examples: |
-      - [Device Alert](alert_type) [232](device_id) [Critical](severity) [11:23](time)
-      - [Device Alert](alert_type) [895](device_id) [High](severity) [17:53](time)
-      - [Device Alert](alert_type) [584](device_id) [Low](severity) [06:59](time)
-      - [Device Alert](alert_type) [100](device_id) [Critical](severity) [00:00](time)
-      - [Device Alert](alert_type) [438](device_id) [High](severity) [12:12](time)
-      - [Device Alert](alert_type) [726](device_id) [Low](severity) [01:45](time)
+      - [Phone](device) Alert [232](device_id) [Critical](severity) [11:23](time)
+      - [Phone](device) Alert [895](device_id) [High](severity) [17:53](time)
+      - [Camera](device) Alert [584](device_id) [Low](severity) [06:59](time)
+      - [Camera](device) Alert [100](device_id) [Critical](severity) [00:00](time)
+      - [Robot](device) Alert [438](device_id) ar[High](severity) [12:12](time)
+      - [Robot](device) Alert [726](device_id) [Low](severity) [01:45](time)
 
   # - intent: ask_question
   #   examples: |

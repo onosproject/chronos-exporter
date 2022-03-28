@@ -20,10 +20,10 @@ rules:
       - intent: chitchat
       - action: utter_chitchat
 
-  # - rule: respond to alert questions
-  #   steps:
-  #     - intent: alert_questions
-  #     - action: utter_alert_questions
+  - rule: respond to alert questions
+    steps:
+      - intent: alert_questions
+      - action: utter_alert_questions
 
   - rule: activate ticket form
     steps:

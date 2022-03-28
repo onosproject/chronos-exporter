@@ -24,7 +24,7 @@ intents:
 
 entities:
   - email
-  - alert_type
+  - device
   - device_id
   - severity
   - time
@@ -43,6 +43,18 @@ slots:
         entity: email
         conditions:
         - active_loop: ticket_form
+  device:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: device
+  severity:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: severity
 
 responses:
   utter_greet:
@@ -86,7 +98,7 @@ responses:
 
   # Device Alerts
   utter_device_alert:
-    - text: I see you have a {severity} {alert_type}. How can I help you?
+    - text: I see you have a {severity} severity {device} alert. How can I help you?
 
   utter_alert_questions/device_connected:
     - text: Please check the Device+SIM status page.
@@ -95,13 +107,13 @@ responses:
     - text: Please check the Device+SIM status page.
 
   utter_alert_questions/other_alerts:
-    - text: Please check the alerts page and filter by device. 
+    - text: Please check the alerts page and filter by {device}. 
 
   utter_alert_questions/small_cell:
     - text: Please check the Small Cells page and look at the list of devices. 
 
   utter_alert_questions/slice:
-    - text: Please check the Slices page and look at the Device group for the device. 
+    - text: Please check the Slices page and look at the Device group for {device}. 
 
 session_config:
   session_expiration_time: 60

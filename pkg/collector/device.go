@@ -25,13 +25,8 @@ func (d *Device) collect(period time.Duration, site string) {
 	sim := *d.Sim
 	go func() {
 		for {
-			count := float64(rand.Intn(100))
-			if count != 5 {
-				deviceConnectedStatus.WithLabelValues("Active", site, sim, sn).Set(1)
-			} else {
-				deviceConnectedStatus.WithLabelValues("Active", site, sim, sn).Set(0)
-			}
-			time.Sleep(period * 3)
+			deviceConnectedStatus.WithLabelValues("Active", site, sim, sn).Set(float64(rand.Intn(2)))
+			time.Sleep(time.Second * time.Duration(3600))
 		}
 	}()
 

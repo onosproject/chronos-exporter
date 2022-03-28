@@ -10,4 +10,18 @@ stories:
       - intent: greet
       - action: utter_greet
 
+  - story: device alert questions path 1
+    steps:
+      - intent: device_alert
+      - action: utter_device_alert
+      - intent: alert_questions
+      - action: utter_alert_questions
+
+  - story: device alert questions path 2
+    steps:
+      - intent: device_alert
+      - action: utter_device_alert
+      - intent: create_ticket
+      - action: ticket_form
+      - action: utter_ticket_complete
 

@@ -120,6 +120,8 @@ kind-only:
 
 publish: # @HELP publish version on github and dockerhub
 	./build/build-tools/publish-version ${VERSION} onosproject/chronos-exporter
+	./build/build-tools/publish-version ${VERSION} onosproject/rasa-model-server
+	./build/build-tools/publish-version ${VERSION} onosproject/rasa-action-server
 
 jenkins-publish: # @HELP Jenkins calls this to publish artifacts
 jenkins-publish: jenkins-tools

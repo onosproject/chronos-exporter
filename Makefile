@@ -89,8 +89,10 @@ jenkins-test: build deps license linters
 	TEST_PACKAGES=github.com/onosproject/chronos-exporter/... ./build/build-tools/build/jenkins/make-unit
 
 chronos-exporter-docker: local-chronos-exporter
+	@go mod vendor
 	docker build . -f build/chronos-exporter/Dockerfile \
 	-t ${DOCKER_REPOSITORY}chronos-exporter:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 rasa-model-server-docker:
 	docker build . -f build/rasa-model-server/Dockerfile \

@@ -4,15 +4,13 @@
 
 package aether
 
-import "time"
-
-func (s *EnterprisesEnterpriseSite) collect() {
+func (s *EnterprisesEnterpriseSite) collect(entId string) {
 
 	for _, sl := range *s.Slice {
-		sl.collect()
+		sl.collect(entId, s.SiteId)
 	}
 
 	for _, d := range *s.Device {
-		d.collect(time.Second*10, s.SiteId)
+		d.collect(entId, s.SiteId)
 	}
 }

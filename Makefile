@@ -95,12 +95,16 @@ chronos-exporter-docker: local-chronos-exporter
 	@rm -rf vendor
 
 rasa-model-server-docker:
+	@go mod vendor
 	docker build . -f build/rasa-model-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-model-server:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 rasa-action-server-docker:
+	@go mod vendor
 	docker build . -f build/rasa-action-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-action-server:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 rasa-sanic-docker:
 	docker build . -f build/rasa-sanic/Dockerfile \

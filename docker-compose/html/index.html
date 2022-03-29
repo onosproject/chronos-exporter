@@ -14,6 +14,16 @@
 <p style="font-family:Arial">Please tryout a chat session with the bot in the bottom right corner</p>
 
 <p style="font-family:Arial">For more information see the <a href="https://github.com/onosproject/chronos-exporter">Chronos Exporter</a> repo.</p>
+<p style="font-family:Arial">Conversations you can have with the bot - </p>
+<ol style="font-family:Arial">
+    <li>To start a conversation, say hi!</li>
+    <li>You ask questions about any key Aether objects (like enterprise, application, slice, device-group etc.).</li>
+    <li>To test out the Device Alert workflow, type in a sample alert informational command "[Device Type][Device ID] [Alert Severity] [Time]". </br>
+        For example "Phone 765 Critical 12:21". </br>
+        Then, you have 2 options - you can either ask the bot questions about the alert (on connectivity, time of connectivity, small cells </br>
+         and slices related to the alert etc.), or ask the bot to create a ticket for the issue. </li>
+</ol>
+<p style="font-family:Arial">For more information on the workflow, please refer to <a href="https://docs.google.com/presentation/d/1gDK4lF04Mj97BnUxKVDEVj3szNxusWoLJiKLS-VNTC0/edit?usp=sharing">Rasa Workflow Slides</a> </p>
 <div id="rasa-chat-widget" data-websocket-url="http://localhost:8181/rasa/socket.io"></div>
 <script src="https://unpkg.com/@rasahq/rasa-chat" type="application/javascript"></script>
 </body>

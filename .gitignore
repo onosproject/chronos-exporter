@@ -28,6 +28,7 @@ build/_output
 __pycache__
 **/.DS_Store
 .cache
+rasa-models/rasa/story_graph.dot
 
 # Rasa Models
 rasa-models/rasa/models

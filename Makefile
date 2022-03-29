@@ -89,20 +89,28 @@ jenkins-test: build deps license linters
 	TEST_PACKAGES=github.com/onosproject/chronos-exporter/... ./build/build-tools/build/jenkins/make-unit
 
 chronos-exporter-docker: local-chronos-exporter
+	@go mod vendor
 	docker build . -f build/chronos-exporter/Dockerfile \
 	-t ${DOCKER_REPOSITORY}chronos-exporter:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 rasa-model-server-docker:
+	@go mod vendor
 	docker build . -f build/rasa-model-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-model-server:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 rasa-action-server-docker:
+	@go mod vendor
 	docker build . -f build/rasa-action-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-action-server:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 rasa-sanic-docker:
+	@go mod vendor
 	docker build . -f build/rasa-sanic/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-sanic:${ONOS_CHRONOS_EXPORTER_VERSION}
+	@rm -rf vendor
 
 kind: # @HELP build Docker images and add them to the currently configured kind cluster
 kind: images kind-only
@@ -113,7 +121,7 @@ kind-only:
 	kind load docker-image --name ${KIND_CLUSTER_NAME} ${DOCKER_REPOSITORY}chronos-exporter:${ONOS_CHRONOS_EXPORTER_VERSION}
 
 publish: # @HELP publish version on github and dockerhub
-	./build/build-tools/publish-version ${VERSION} onosproject/chronos-exporter onosproject/rasa-model-server onosproject/rasa-action-server
+	./build/build-tools/publish-version ${VERSION} onosproject/chronos-exporter onosproject/rasa-model-server onosproject/rasa-action-server onosproject/rasa-sanic
 
 jenkins-publish: # @HELP Jenkins calls this to publish artifacts
 jenkins-publish: jenkins-tools

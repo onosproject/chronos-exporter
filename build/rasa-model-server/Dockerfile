@@ -20,9 +20,9 @@ COPY rasa-models/rasa /app
 WORKDIR /app
 RUN /opt/venv/bin/rasa train
 
-FROM alpine:3.12
+FROM alpine:3.15
 
-COPY --from=build /go/src/github.com/onosproject/chronos-exporter/build/_output/chronos-exporter /usr/local/bin/
+COPY --from=build /go/src/github.com/onosproject/chronos-exporter/build/_output/rasa-model-server /usr/local/bin/
 
 COPY --from=rasa-trainer /app/models/*.tar.gz /opt/rasa-models/20220101-000000-aether-trained.tar.gz
 

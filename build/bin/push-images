@@ -11,3 +11,4 @@ make images
 docker push onosproject/chronos-exporter:latest
 docker push onosproject/rasa-model-server:latest
 docker push onosproject/rasa-action-server:latest
+docker push onosproject/rasa-sanic:latest

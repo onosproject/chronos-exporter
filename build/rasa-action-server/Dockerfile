@@ -13,11 +13,10 @@ RUN mkdir -p $ADAPTER_ROOT/
 COPY . $ADAPTER_ROOT/
 COPY build/build-tools /go/src/github.com/onosproject/chronos-exporter/build-tools/
 
-#RUN cd $ADAPTER_ROOT && GO111MODULE=on go build -o /go/bin/rasa-action-server ./cmd/rasa-action-server
 RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build-rasa-action-server
 
 
 FROM alpine:3.15
+RUN apk add libc6-compat
 
-#COPY --from=build /go/bin/rasa-action-server /usr/local/bin/
 COPY --from=build /go/src/github.com/onosproject/chronos-exporter/build/_output/rasa-action-server /usr/local/bin/

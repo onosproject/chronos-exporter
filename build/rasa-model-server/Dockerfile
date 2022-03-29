@@ -13,7 +13,7 @@ RUN mkdir -p $ADAPTER_ROOT/
 COPY . $ADAPTER_ROOT/
 COPY build/build-tools /go/src/github.com/onosproject/chronos-exporter/build-tools/
 #RUN cd $ADAPTER_ROOT && GO111MODULE=on go build -o /go/bin/rasa-model-server ./cmd/rasa-model-server
-RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build
+RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build-rasa-model-server
 
 FROM rasa/rasa:3.0.4-full as rasa-trainer
 COPY rasa-models/rasa /app

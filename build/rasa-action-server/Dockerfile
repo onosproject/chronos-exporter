@@ -14,7 +14,7 @@ COPY . $ADAPTER_ROOT/
 COPY build/build-tools /go/src/github.com/onosproject/chronos-exporter/build-tools/
 
 #RUN cd $ADAPTER_ROOT && GO111MODULE=on go build -o /go/bin/rasa-action-server ./cmd/rasa-action-server
-RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build
+RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build-rasa-action-server
 
 
 FROM alpine:3.15

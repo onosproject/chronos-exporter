@@ -15,7 +15,7 @@ COPY build/build-tools /go/src/github.com/onosproject/chronos-exporter/build-too
 
 RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build
 
-FROM alpine:3.12
+FROM alpine:3.15
 RUN apk add bash openssl curl libc6-compat
 
 ENV HOME=/home/chronos-exporter

@@ -13,7 +13,7 @@ RUN mkdir -p $ADAPTER_ROOT/
 COPY . $ADAPTER_ROOT/
 COPY build/build-tools /go/src/github.com/onosproject/chronos-exporter/build-tools/
 
-RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build
+RUN cd $ADAPTER_ROOT && GOFLAGS=-mod=vendor make build-chronos-exporter
 
 FROM alpine:3.15
 RUN apk add bash openssl curl libc6-compat

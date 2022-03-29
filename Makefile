@@ -32,8 +32,16 @@ ifdef LOCAL_CHRONOS_EXPORTER
 endif
 
 build: # @HELP build the go binary in the cmd/chronos-exporter package
-build: local-chronos-exporter
+build: local-chronos-exporter build-chronos-exporter build-rasa-model-server build-rasa-action-server
+
+build-chronos-exporter: # @HELP build the go binary in the cmd/chronos-exporter package
 	go build -o build/_output/chronos-exporter ./cmd/chronos-exporter
+
+build-rasa-model-server: # @HELP build the go binary in the cmd/rasa-model-server package
+	go build -o build/_output/rasa-model-server ./cmd/rasa-model-server
+
+build-rasa-action-server: # @HELP build the go binary in the cmd/rasa-action-server package
+	go build -o build/_output/rasa-action-server ./cmd/rasa-action-server
 
 openapi-spec-validator: # @HELP install openapi-spec-validator
 	openapi-spec-validator -h || python -m pip install openapi-spec-validator==0.3.1

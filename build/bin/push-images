@@ -9,3 +9,5 @@ set -e
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 make images
 docker push onosproject/chronos-exporter:latest
+docker push onosproject/rasa-model-server:latest
+docker push onosproject/rasa-action-server:latest

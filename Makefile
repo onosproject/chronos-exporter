@@ -119,9 +119,7 @@ kind-only:
 	kind load docker-image --name ${KIND_CLUSTER_NAME} ${DOCKER_REPOSITORY}chronos-exporter:${ONOS_CHRONOS_EXPORTER_VERSION}
 
 publish: # @HELP publish version on github and dockerhub
-	./build/build-tools/publish-version ${VERSION} onosproject/chronos-exporter
-	./build/build-tools/publish-version ${VERSION} onosproject/rasa-model-server
-	./build/build-tools/publish-version ${VERSION} onosproject/rasa-action-server
+	./build/build-tools/publish-version ${VERSION} onosproject/chronos-exporter onosproject/rasa-model-server onosproject/rasa-action-server
 
 jenkins-publish: # @HELP Jenkins calls this to publish artifacts
 jenkins-publish: jenkins-tools

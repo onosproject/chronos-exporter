@@ -47,6 +47,7 @@ The Docker images are built dynamically. If you need to rebuild, run:
 docker-compose build
 docker-compose up
 ```
+Note: if you get an error about `go: inconsistent vendoring` then you should `make images` again from top level directory.
 
 ## Monitoring
 From another terminal window (when in the same `docker-compose` directory)

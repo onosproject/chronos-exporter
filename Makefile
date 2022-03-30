@@ -100,25 +100,21 @@ chronos-exporter-docker: local-chronos-exporter
 	@go mod vendor
 	docker build . -f build/chronos-exporter/Dockerfile \
 	-t ${DOCKER_REPOSITORY}chronos-exporter:${ONOS_CHRONOS_EXPORTER_VERSION}
-	@rm -rf vendor
 
 rasa-model-server-docker:
 	@go mod vendor
 	docker build . -f build/rasa-model-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-model-server:${ONOS_CHRONOS_EXPORTER_VERSION}
-	@rm -rf vendor
 
 rasa-action-server-docker:
 	@go mod vendor
 	docker build . -f build/rasa-action-server/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-action-server:${ONOS_CHRONOS_EXPORTER_VERSION}
-	@rm -rf vendor
 
 rasa-sanic-docker:
 	@go mod vendor
 	docker build . -f build/rasa-sanic/Dockerfile \
 	-t ${DOCKER_REPOSITORY}rasa-sanic:${ONOS_CHRONOS_EXPORTER_VERSION}
-	@rm -rf vendor
 
 kind: # @HELP build Docker images and add them to the currently configured kind cluster
 kind: images kind-only
